@@ -1,0 +1,169 @@
+@charset "utf-8";
+/* CSS Document */
+
+#calenderBlock{
+	padding:35px 0 35px 0;
+	background:url(../img/bg_date.png);
+}
+#calenderBlock h2{
+	font-size:22px;
+	padding-bottom:10px;
+}
+#calenderBlock h2 i{
+	color:#333;
+	margin-top:-2px;
+}
+#calenderInner{
+	max-width:960px;
+	margin:0 auto;
+}
+#calenderInner table.calender{
+	width:100%;
+	float:left;
+}
+#calenderInner table.calenderL{
+	width:49%;
+	float:left;
+}
+#calenderInner table.calenderR{
+	width:49%;
+	float:right;
+}
+#calenderInner table td{
+	border:1px solid #CCC;
+	text-align:center;
+	padding:5px;
+	background:#FFF;
+}
+#calenderInner table td span{
+	font-size:10px;
+	display:block;
+}
+#calenderInner table th{
+	background:#7e7e7e;
+	color:#FFFFFF;
+	text-align:center;
+	padding:5px;
+	border-radius:8px 8px 0 0 ;
+}
+#calenderInner table td.dateSunday{
+	background:#ffecf2;
+}
+#calenderInner table td.dateSaturday{
+	background:#ecf9ff;
+}
+#calenderInner table td.sun{
+	background:#ffecf2;
+}
+#calenderInner table td.sat{
+	background:#ecf9ff;
+}
+.table_calendar { 
+	width: 100%; /* テーブルの横幅 */ 
+	border-collapse: collapse; /* 枠線の表示方法 */ 
+	border: 1px #CCCCCC solid; /* テーブル全体の枠線（太さ・色・スタイル） */ 
+	margin-top:	5px;
+	background-color: #F8F8FF;
+	text-align: center;
+} 
+
+.table_calendar th { 
+	border: 1px #CCCCCC solid; /* セルの枠線（太さ・色・スタイル） */ 
+} 
+
+.table_calendar td { 
+	border: 1px #DCDCDC dotted; /* セルの枠線（太さ・色・スタイル） */ 
+} 
+
+.table_calendar_date { 
+	color:#cccccc;
+} 
+
+
+.table_calendar_date a{/*リンクされた文字*/
+    color:#0000ff;
+    font-style:weight;
+}
+
+.close-day { 
+	color:#cccccc;
+} 
+
+
+.close-day a{/*リンクされた文字*/
+    color:#0000ff;
+    font-style:weight;
+}
+
+
+
+
+
+.table_calendar_large{ 
+	width: 100%; /* テーブルの横幅 */ 
+	border-collapse: collapse; /* 枠線の表示方法 */ 
+	border: 1px #999999 solid; /* テーブル全体の枠線（太さ・色・スタイル） */ 
+	margin-top:	5px;
+	background-color: #F8F8FF;
+	text-align: center;
+} 
+
+.table_calendar th { 
+	border: 1px #CCCCCC solid; /* セルの枠線（太さ・色・スタイル） */ 
+} 
+
+.table_calendar_large td { 
+	border: 1px #CCCCCC solid; /* セルの枠線（太さ・色・スタイル） */
+	vertical-align:text-top;
+} 
+
+.table_calendar_large_date { 
+	color:#999999;
+} 
+
+
+.table_calendar_large_date a{/*リンクされた文字*/
+    color:#0000ff;
+}
+
+.calenderBox .table_calendar_large_today div{ 
+	background-color: #F0CAF1;
+	height:100%;
+	width: 100%;
+} 
+
+
+.table_calendar_large_holiday { 
+	color: #A2061C
+} 
+
+.table_calendar_large td:first-child{
+	background-color: #FEE7F7;
+}
+
+.table_calendar_large td:last-child{
+	background-color: #EBEDF7;
+}
+#calenderBlock td.businessday{
+	background-color:#CDCBCC;
+	color:FFFFFF;
+}
+
+.businessday_comment{
+	color:#CDCBCC;
+    font-style:weight;
+	font-size:30px;
+white-space: nowrap;
+}
+.saturday_comment{
+	color:#ecf9ff;
+    font-style:weight;
+	font-size:30px;
+white-space: nowrap;
+}
+.sun_comment{
+	color:#ffecf2;
+    font-style:weight;
+	font-size:30px;
+white-space: nowrap;
+}

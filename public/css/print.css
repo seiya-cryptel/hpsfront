@@ -1,0 +1,127 @@
+@media print {
+  *, :after, :before {
+    color: #000 !important;
+    text-shadow: none !important;
+    background: 0 0 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
+  }
+         h1, h2,h3 {
+
+            font-size: 1em !important;
+          }
+  a[href]:after {
+    content: ""!important;
+  }
+  abbr[title]:after {
+    content: ""!important;
+  }
+	.content-print{
+
+        width:620px !IMPORTANT;
+
+    }
+	.well{
+
+        width:620px !IMPORTANT;
+
+    }
+  a, a: visited {
+    text-decoration: underline
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")"
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")"
+  }
+
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: ""
+  }
+
+  blockquote, pre {
+    border: 1px solid #999;
+    page-break-inside: avoid
+  }
+
+  thead {
+    display: table-header-group
+  }
+
+  img, tr {
+    page-break-inside: avoid
+  }
+
+  img {
+    max-width: 100% !important
+  }
+
+  h2, h3, p {
+    orphans:3; /* 改ページされる際の前ページの最低行数 */
+    widows:3   /* これは何？ */
+  }
+
+  h2, h3 {
+    page-break-after: avoid
+  }
+
+  select {
+    background: #fff !important
+  }
+
+  .navbar {
+    display: none
+  }
+
+  .btn > .caret,
+  .dropup > .btn > .caret {
+    border-top-color: #000 !important
+  }
+
+  .label {
+    border: 1px solid #000
+  }
+
+  .table {
+    border-collapse: collapse !important
+  }
+
+  .table td,
+  .table th {
+    background-color: #fff !important
+  }
+
+  .table-bordered td,
+  .table-bordered th {
+    border: 1px solid #ddd !important
+  }
+
+ thead {
+    display: table-header-group
+  }
+
+  img, svg, tr {
+    page-break-inside: avoid
+  }
+
+  img {
+    max-width: 100% !important
+  }
+
+  h2, h3, h4, p {
+    orphans:3; /* 改ページされる際の前ページの最低行数 */
+    widows:3   /* これは何？ */
+  }
+
+  h2, h3, h4 {
+    page-break-after: avoid
+  }
+
+  .navbar {
+    display: none
+  }
+}

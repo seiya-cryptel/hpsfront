@@ -17,4 +17,12 @@ class OrderDetail extends Model
         $ret = OrderDetail::where('order_id', $order_id)->where('kbn_return', '<>', 0)->exists();
         return $ret;
     }
+
+    // オーダIDでレコードを取得
+    public function getByOrderId($order_id)
+    {
+        $recs = OrderDetail::where('order_id', $order_id)->orderBy('row_no')->get();
+        return $recs;
+    }
+    
 }

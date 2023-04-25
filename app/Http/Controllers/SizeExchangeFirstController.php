@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Order;
 
-class SizeExchangeFirstController extends FrontBaseController
+class SizeExchangeFirstController extends Front1Controller
 {
     function __construct() {
 		parent::__construct();
@@ -20,6 +20,14 @@ class SizeExchangeFirstController extends FrontBaseController
 	public function index()
     {
         return view('SizeExchangeFirst/index', []);
+    }
+
+    // POST
+	public function reg(Request $request)
+    {
+		$pwd = parent::reg($request);
+
+        return view('sizeexchangefirst/pwd', ['password' => $pwd]); 
     }
 
     // ログインパスワード表示

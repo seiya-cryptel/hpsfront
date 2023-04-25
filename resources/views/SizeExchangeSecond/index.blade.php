@@ -44,13 +44,13 @@
     <h3 class="text-center">上記規約に同意いただけますか？</h3>
 
     <div class="hidden-xs text-center" style="margin-top:30px;">
-        <button type="submit" class="btn btn-success btn-lg "  onclick="location.href='sizeexchange_second/no/';">いいえ</button>
-        <button type="submit" class="btn btn-success btn-lg " onclick="location.href='sizeexchange_second/entry/3/';" >はい</button>
+        <button type="submit" class="btn btn-success btn-lg "  onclick="location.href='/sizeexchangesecond/no/';">いいえ</button>
+        <button type="submit" class="btn btn-success btn-lg " onclick="location.href='/sizeexchangesecond/entry/3/';" >はい</button>
     </div>
 
     <div class="visible-xs text-center" style="margin-top:30px;">
-        <button type="submit" class="btn btn-success btn-lg  btn-block"  onclick="location.href='sizeexchange_second/no/';">いいえ</button>
-        <button type="submit" class="btn btn-success btn-lg  btn-block" onclick="location.href='sizeexchange_second/entry/3/';" >はい</button>
+        <button type="submit" class="btn btn-success btn-lg  btn-block"  onclick="location.href='/sizeexchangesecond/no/';">いいえ</button>
+        <button type="submit" class="btn btn-success btn-lg  btn-block" onclick="location.href='/sizeexchangesecond/entry/3/';" >はい</button>
     </div>
 </div>
 

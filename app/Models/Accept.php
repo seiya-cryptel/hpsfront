@@ -114,5 +114,25 @@ class Accept extends Model
         }
         return false;
     }
+
+    // ログインIDで検索する
+    public function firstByLoginId($login_id)
+    {
+        $accept = Accept::where('login_id', $login_id)->first();
+        return $accept;
+    }
+
+    // IDで検索する
+    public function firstById($id)
+    {
+        $accept = Accept::where('id', $id)->first();
+        return $accept;
+    }
+
+    // パスワードで認証する
+    public function authPassword($password)
+    {
+        return ($this->password == $password);
+    }
     
 }

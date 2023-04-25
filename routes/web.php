@@ -35,10 +35,11 @@ Route::get('/sizeexchangefirst', [SizeExchangeFirstController::class, 'index']);
 Route::post('/sizeexchangefirst', [SizeExchangeFirstController::class, 'reg']);
 Route::get('/sizeexchangefirst/pwd', [SizeExchangeFirstController::class, 'pwd']);
 
-Route::get('/sizeexchangesecond', [SizeExchangeSecondController::class, 'index']);
-Route::get('/sizeexchangesecond/no', [SizeExchangeSecondController::class, 'no']);
+Route::get('/sizeexchangesecond', [SizeExchangeSecondController::class, 'index']);  // サイズ交換について
+Route::get('/sizeexchangesecond/no', [SizeExchangeSecondController::class, 'no']);  // 同意できない
 Route::get('/sizeexchangesecond/entry/{no}', [SizeExchangeSecondController::class, 'entry']);
-Route::get('/sizeexchangesecond/confirm/{no}', [SizeExchangeSecondController::class, 'confirm']);
+Route::post('/sizeexchangesecond/confirm/{no}', [SizeExchangeSecondController::class, 'confirm']);
+
 Route::get('/sizeexchangesecond/reg/{no}', [SizeExchangeSecondController::class, 'reg']);
 
 // 商品不良等
@@ -51,6 +52,7 @@ Route::post('/return2first', [Return2FirstController::class, 'reg']);
 
 // ログイン
 Route::get('/login/index/{login_id}', [LoginController::class, 'index']);
+Route::post('/login/check/{login_id}', [LoginController::class, 'check']);
 
 // バーコード画像生成
 // Route::get('/imagebarcode/show/{code}', [ImageBarCodeController::class, 'show']);

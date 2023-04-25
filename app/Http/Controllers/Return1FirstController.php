@@ -19,6 +19,14 @@ class Return1FirstController extends FrontBaseController
         return view('Return1First/index', []);
     }
 
+    // POST
+	public function reg(Request $request)
+    {
+		$pwd = parent::reg($request);
+
+        return view('return1first/pwd', ['password' => $pwd]); 
+    }
+
     // ログインパスワード表示
 	public function pwd()
     {

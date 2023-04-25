@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SizeExchangeSecondController extends FrontBaseController
+class SizeExchangeSecondController extends Front2Controller
 {
+
+    // 説明
     function index() {
         return view('SizeExchangeSecond/index', []);
     }
@@ -17,12 +19,26 @@ class SizeExchangeSecondController extends FrontBaseController
 
     // 同意あり　入力フォーム
     function entry($no) {
-        return view('SizeExchangeSecond/entry', []);
+        if(! $this->_chk_login())
+        {
+            return redirect('/');
+        }
+
+        $params = $this->_entry($no);
+
+        return view('SizeExchangeSecond/entry', $params);
     }
 
     // 確認フォーム
-    function confirm($no) {
-        return view('SizeExchangeSecond/confirm', []);
+    function confirm(Request $request, $no) {
+        if(! $this->_chk_login())
+        {
+            return redirect('/');
+        }
+
+        $params = $this->_confirm($request, $no);
+
+        return view('SizeExchangeSecond/confirm', $params);
     }
 
     // 受付表

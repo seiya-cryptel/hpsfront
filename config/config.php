@@ -14,8 +14,23 @@ return [
     'MAIL_SIZEEXCHANGE_ACCEPT'  => 310, // 受付完了(サイズ交換)
 
     'REQUEST_CONTENT_CLASS_RETURN1'     => '1',
-    'REQUEST_CONTENT_SIZEEXCHANGE'      => '2',
-    'REQUEST_CONTENT_CLASS_RETURN2'     => '3',
+    'REQUEST_CONTENT_SIZEEXCHANGE'      => '3', // 転記間違い
+    'REQUEST_CONTENT_CLASS_RETURN2'     => '4', // 転記間違い
 
     'SITE_NAME' => '',
-];
+
+    'request_method' => [
+        ''	=>	'----------', 
+        '1'	=>	'クレーム（代替品要）',
+        '2'	=>	'クレーム（返品のみ）',
+        '3'	=>	'サイズ交換',
+        '4'	=>	'お客様都合返品',
+    ],
+
+    'request_method2' => [
+        '1'	=>	'クレーム',
+        '3'	=>	'サイズ交換',
+        '4'	=>	'お客様都合返品',
+    ],
+
+    ];

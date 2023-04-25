@@ -20,6 +20,14 @@ class Return2FirstController extends FrontBaseController
         return view('Return2First/index', []);
     }
 
+    // POST
+	public function reg(Request $request)
+    {
+		$pwd = parent::reg($request);
+
+        return view('return2first/pwd', ['password' => $pwd]); 
+    }
+
     // ログインパスワード表示
 	public function pwd()
     {

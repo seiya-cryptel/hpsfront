@@ -4,11 +4,38 @@
 @section('content')
 
 <div class="well">
-    <button type="button" class="hidden-xs btn btn-info btn-lg btn-block" ><strong>サイズ交換</strong>  　<small>（安全靴、作業靴、ユニフォームのサイズ交換）</small></button>
-    <button type="button" class="visible-xs btn btn-info btn-lg btn-block" ><strong>サイズ交換</strong>  　<br><small>（安全靴、作業靴、<br>ユニフォームのサイズ交換）</small></button>
+    @switch($request_content_class)
+        @case(1)
+            <button type="button" class="btn btn-danger btn-lg btn-block" ><strong>商品不良等</strong></button>
+            @break
+    
+        @case(3)
+            <button type="button" class="hidden-xs btn btn-info btn-lg btn-block" ><strong>サイズ交換</strong>  　<small>（安全靴、作業靴、ユニフォームのサイズ交換）</small></button>
+            <button type="button" class="visible-xs btn btn-info btn-lg btn-block" ><strong>サイズ交換</strong>  　<br><small>（安全靴、作業靴、<br>ユニフォームのサイズ交換）</small></button>
+            @break
+    
+        @case(4)
+            <button type="button" class="btn btn-warning btn-lg btn-block" ><strong>お客様都合　返品</strong></button>
+            @break
+    
+        @default
+            
+    @endswitch
+
     <br><br>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="/login/check/{{ $login_id }}" id="" method="post" accept-charset="utf-8">
+        @csrf
         <div class="clearfix"></div>
         <main id="form-main" role="form-main" class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
             <div class="entry-content">
@@ -16,7 +43,7 @@
                     <table>
                     <tr>
                         <th >認証パスワードを入力下さい </th>
-                        <td><input name="password" type="text" id="password" value="" class="form-control" size="30" style="ime-mode: inactive;">                
+                        <td><input name="password" type="text" id="password" value="{{ old('password') }}" class="form-control" size="30" style="ime-mode: inactive;">                
                         </td>
                     </tr>
                     </table>

@@ -42,6 +42,10 @@ abstract class Front2Controller extends FrontBaseController
     protected function _validation(Request $request, $select)
     {
 
+        // OrderDetail レコード
+        $orderDetailModel = new OrderDetail();
+        $orderDetails = $orderDetailModel->getByOrderId(Session::get('ft_order_id'));
+
         // Return_second::_set_validation(), order_id_check() 参照
         // オーダID存在チェック
         $rules = [
@@ -61,8 +65,6 @@ abstract class Front2Controller extends FrontBaseController
             $rules['post2'] = 'required|numeric';
         }
 
-/*
-
         // お客様都合返品でない
         if($request['select'] != 4)
         {
@@ -80,75 +82,65 @@ abstract class Front2Controller extends FrontBaseController
             $rules['pickup_date'] = ['required','numeric'];
             $rules['pickup_time'] = ['required','numeric'];
         }
-*/
+
         $validator = Validator::make($request->all(),
             $rules,
         );
 
         $validated = $validator->validate();
 
-        // 入力 entry() でない
         $total_price = 0;
-        if($this->method != 'entry')
-        {
-			$umo=0;
-			foreach ($request as $key => $in) {
-				$h = mb_substr($key, 0, 2);
-				if($h == "s_")    // 数量
-                {
-					$tmp = explode("_", $key);
-					if($in == 0 || (! $in))
-                    {
-                        // 返品・交換 数量 0
-					}
-                    else
-                    {
-                        // 返品・交換 数量 0 以外
-						if($in == -1)
-                        {
-							if((! $request("t_" . $tmp[1])) || ($request("t_" . $tmp[1]) < 0))
-                            {
-                                $validator->errors()->add("t_" . $tmp[1], '数量を入力してください。');
-							}
-                            else
-                            {
-	    						// if(ereg("^[0-9]+$", $this->input->post("t_".$tmp[1]))){  2018/06/11
-								if(preg_match("/^[0-9]+$/", $request("t_" . $tmp[1])))
-                                {
-									if($order_detail[$tmp[1]]->amount < $request("t_" . $tmp[1]))
-                                    {
-                                        $validator->errors()->add("t_" . $tmp[1], '購入数量を超えています。');
-									}
-                                    else
-                                    {
-										$umo++;
-                                        $total_price += $request("s_" . $tmp[1]) * $order_detail[$tmp[1]]->unit_price;  // 2018/09/05
-									}
-								}
-                                else
-                                {
-                                    $validator->errors()->add("t_" . $tmp[1], '数字を入力してください。');
-								}
-							}
-						}
-                        else
-                        {
-							$umo++;
-                            $total_price += $request("s_" . $tmp[1]) * $order_detail[$tmp[1]]->unit_price;  // 2018/09/17
-						}
-					}
-				}
-			}
+        $umo=0;
+        $hasError = false;
+        foreach ($request as $key => $in) {
+            $h = mb_substr($key, 0, 2);
+            if($h != "s_")  continue;    // 数量以外は見ない
 
-			if($umo == 0){
-                $validator->errors()->add("t_", '対象商品の数量を入力してください。');
-			}
-			if($total_price > 100000) { // 2018/09/05
-                $validator->errors()->add("t_", '返品金額の合計金額が高額となる為、本システムでは受付出来ません。コールセンターまでお問合せ下さい。');
-			}
+            $tmp = explode("_", $key);
+            if($in == 0 || (! $in)) continue;   // 返品・交換 数量 0
+
+            if($in != -1)   // 数量が選択されて 0 でない
+            {
+                $umo++;
+                $total_price += $request("s_" . $tmp[1]) * $orderDetails[$tmp[1]]->unit_price;  // 2018/09/17
+                continue;
+            }
+
+            // 返品・交換 数量 0 以外が手入力された
+            if((! $request("t_" . $tmp[1])) || ($request("t_" . $tmp[1]) < 0))
+            {
+                $validator->errors()->add("t_" . $tmp[1], 'No.' . $tmp[1] . ' の数量を入力してください。');
+                $hasError = true;
+                continue;
+            }
+
+            // if(ereg("^[0-9]+$", $this->input->post("t_".$tmp[1]))){  2018/06/11
+            if(! preg_match("/^[0-9]+$/", $request("t_" . $tmp[1])))
+            {
+                $validator->errors()->add("t_" . $tmp[1], 'No.' . $tmp[1] . ' は数字を入力してください。');
+                $hasError = true;
+                continue;
+            }
+    
+            if($order_detail[$tmp[1]]->amount < $request("t_" . $tmp[1]))
+            {
+                $validator->errors()->add("t_" . $tmp[1], 'No.' . $tmp[1] . ' は購入数量を超えています。');
+                $hasError = true;
+                continue;
+            }
+
+            $umo++;
+            $total_price += $request("s_" . $tmp[1]) * $orderDetails[$tmp[1]]->unit_price;  // 2018/09/05
         }
 
-        $validated = $validator->validate();
+        if($umo == 0){
+            $validator->errors()->add("t_", '対象商品の数量を入力してください。');
+        }
+        if($total_price > 100000) { // 2018/09/05
+            $validator->errors()->add("t_", '返品金額の合計金額が高額となる為、本システムでは受付出来ません。コールセンターまでお問合せ下さい。');
+        }
+
+        return $hasError ? $validator : null;
     }
 
     public function init()
@@ -184,7 +176,11 @@ abstract class Front2Controller extends FrontBaseController
         $params = [];
         $params['select'] = $no;
         $params['order_id'] = Session::get('ft_order_id');
+        $params['order'] = $this->order;
         $params['orderDetails'] = $this->orderDetails;
+        $params['accept'] = $this->accept;
+        $params['pickupDays'] = $this->pickupDays;
+        $params['pickupTimes'] = $this->pickupTimes;
 
         return $params;
     }
@@ -192,9 +188,17 @@ abstract class Front2Controller extends FrontBaseController
     // 入力フォームの評価
     protected function _confirm(Request $request, $select)
     {
-        $this->_validation($request, $select);
+        $validator = $this->_validation($request, $select);
+        if(! is_null($validator)) {
+            return back()->withInput()->withErrors($validator);
+        }
 
-        $params = [];
+        $params = $this->_entry($select);
+        $params['request'] = $request;
+
+        // 未登録の時
+        // $data = $this->_show_post_page($data);
+        // $data=$this->_set_message_confirm($data);
 
         return $params;
     }

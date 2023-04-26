@@ -9,12 +9,24 @@ class SizeExchangeSecondController extends Front2Controller
 
     // 説明
     function index() {
-        return view('SizeExchangeSecond/index', []);
+        $params = [];
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(43);
+
+        return view('SizeExchangeSecond/index', params);
     }
 
     // 同意なし
     function no() {
-        return view('SizeExchangeSecond/no', []);
+        $params = [];
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(53);
+
+        return view('SizeExchangeSecond/no', $params);
     }
 
     // 同意あり　入力フォーム
@@ -26,6 +38,10 @@ class SizeExchangeSecondController extends Front2Controller
 
         $params = $this->_entry($no);
 
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(63);
+
         return view('SizeExchangeSecond/entry', $params);
     }
 
@@ -36,7 +52,11 @@ class SizeExchangeSecondController extends Front2Controller
             return redirect('/');
         }
 
-        $params = $this->_confirm($request, $no);
+        $params = $this->_confirm($request, $no);       
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(73);
 
         return view('SizeExchangeSecond/confirm', $params);
     }

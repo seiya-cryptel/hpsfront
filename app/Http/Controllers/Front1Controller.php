@@ -108,14 +108,14 @@ abstract class Front1Controller extends FrontBaseController
             'name'                      => $order->order_name,
             'login_id'                  => md5(uniqid()),
             'request_content_class'     => $this->request_content_class,
-            'date_added'                => date('Y-m-d\TH:i:sP'),
-            'last_modified'             => date('Y-m-d\TH:i:sP'),
+            'date_added'                => date('Y-m-d H:i:s'),
+            'last_modified'             => date('Y-m-d H:i:s'),
             't_register'                => $request->ip(),
             'u_register'                => $request->ip(),
 
             'shipping_tel'              => $order->shipping_tel,
             'shipping_name'             => $order->shipping_name,
-            'date_dl_history'           => date('Y-m-d\TH:i:sP', strtotime('0')),
+            'date_dl_history'           => date('Y-m-d H:i:s', strtotime('0')),
             'p_arrangement_order_id'    => '',
             'comment_irai'              => '',
         ]);

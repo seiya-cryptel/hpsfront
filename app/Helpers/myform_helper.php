@@ -52,7 +52,8 @@
    //  foreach (list($value,$columns ) = each($select_array)) {
      foreach ($select_array as $value=>$text) {
       $field .= '<option value="' . $value . '"';
-      if ( $default == $value ) {
+      if ( $default == $value )
+	  {
         $field .= ' SELECTED';
       }
       $field .= '>' . $text  . '</option>';

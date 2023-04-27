@@ -24,5 +24,12 @@ class OrderDetail extends Model
         $recs = OrderDetail::where('order_id', $order_id)->orderBy('row_no')->get();
         return $recs;
     }
+
+    // オーダIDとrow_noでレコードを取得
+    public function firstByOrderIdRowNo($order_id, $row_no)
+    {
+        $rec = OrderDetail::where('order_id', $order_id)->where('row_no', $row_no)->first();
+        return $recs;
+    }
     
 }

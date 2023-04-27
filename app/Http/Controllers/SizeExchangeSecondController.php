@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Message;
+
 class SizeExchangeSecondController extends Front2Controller
 {
 
@@ -15,7 +17,7 @@ class SizeExchangeSecondController extends Front2Controller
         $messageModel = new Message();
         $params['message'] = $messageModel->firstById(43);
 
-        return view('SizeExchangeSecond/index', params);
+        return view('SizeExchangeSecond/index', $params);
     }
 
     // 同意なし
@@ -36,7 +38,7 @@ class SizeExchangeSecondController extends Front2Controller
             return redirect('/');
         }
 
-        $params = $this->_entry($no);
+        $params = $this->_entry('sizeexchangesecond', $no);
 
         // メッセージレコード
         $messageModel = new Message();
@@ -52,7 +54,8 @@ class SizeExchangeSecondController extends Front2Controller
             return redirect('/');
         }
 
-        $params = $this->_confirm($request, $no);       
+        $params = $this->_confirm($request, 'sizeexchangesecond', $no);
+        $params['returns'] = $this->_get_returns($request);
 
         // メッセージレコード
         $messageModel = new Message();
@@ -62,8 +65,19 @@ class SizeExchangeSecondController extends Front2Controller
     }
 
     // 受付表
-    function reg($no) {
-        return view('SizeExchangeSecond/reg', []);
+    function reg(Request $request, $no) {
+        if(! $this->_chk_login())
+        {
+            return redirect('/');
+        }
+
+        $params = $this->_regist($request, $no);
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(83);
+
+        return view('SizeExchangeSecond/reg', $params);
     }
     
 }

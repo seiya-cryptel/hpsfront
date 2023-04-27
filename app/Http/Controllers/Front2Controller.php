@@ -143,13 +143,77 @@ abstract class Front2Controller extends FrontBaseController
         return $hasError ? $validator : null;
     }
 
+    protected function _RegenAcceptDetail($select)
+    {
+        // 既存明細レコード削除
+        $acceptDetailModel = new AcceptDetail();
+        $acceptDetailModel->firstById(Session::get('ft_id'));
+
+        $returns = $this->_get_returns($request);   // 返品・交換対象
+        $orderDetailModel = new OrderDetail();
+        foreach($returns as $row_no => $amount)
+        {
+            // OrderDetail レコード
+            $orderDetail = $orderDetailModel->firstByOrderIdRowNo(Session::get('ft_order_id'), $row_no);
+            $acceptDetailModel->createFromOrderDetail(
+                Session::get('ft_id'),
+                $orderDetail,
+                $select,
+                $amount
+            );
+
+        }
+    }
+
+    // メール送信用データ作成
+    protected function _generateMailData($order, $accept, &$mailData)
+    {
+        $mailReplaceTable = [
+            "##date##"          => strftime('%Y/%m/%d'),
+            "##date time##"     => strftime('%Y/%m/%d %H:%M'),
+            "##site_url##"      => url('/', null, true),
+            "##password##"      => $accept->password,
+            "##name##"          => $order->order_name,
+            "##confirmation_url##"     => $this->regMail_login_url . $accept->login_id,
+        ];
+
+        $source = array_keys($mailReplaceTable);
+        $destination = array_values($mailReplaceTable);
+
+        // メールテンプレートを取得する
+        $mailtemplateModel = new MailTemplate();
+        $mailtemplate = $mailtemplateModel->findByMailId($this->mail_id);
+
+        //body
+        $mail_body = str_replace($source, $destination, $mailtemplate->body);
+        $mailData['body'] = $mail_body;
+
+        //from_name
+        $mail_from_name = str_replace($source, $destination, $mailtemplate->from_name);
+        $mailData['from_name'] = $mail_from_name;
+
+        //from_mail
+        $mail_from_email = str_replace($source, $destination, $mailtemplate->from_mail);
+        $mailData['from_email'] = $mail_from_email;
+
+        // bcc
+        $pieces = explode("\n", $mailtemplate->bcc);
+        $bcc_str=implode( ",", $pieces );
+        $mailData['bcc'] = $bcc_str;
+
+        //subject
+        $subject = str_replace($source, $destination, $mailtemplate["subject"]);
+        $mail_subject = str_replace($source, $destination, $mailtemplate->subject);
+        $mailData['subject'] = $mail_subject;
+    }
+
     public function init()
     {
 		
     }
 
     // 入力フォームの準備
-    protected function _entry($no) {
+    protected function _entry($urlController, $select) {
         // Accept レコード
         $acceptModel = new Accept();
         $this->accept = $acceptModel->firstById(Session::get('ft_id'));
@@ -174,7 +238,8 @@ abstract class Front2Controller extends FrontBaseController
 		// $data["returns"] =$this->_get_returns();
 
         $params = [];
-        $params['select'] = $no;
+        $params['urlController'] = $urlController;
+        $params['select'] = $select;
         $params['order_id'] = Session::get('ft_order_id');
         $params['order'] = $this->order;
         $params['orderDetails'] = $this->orderDetails;
@@ -186,19 +251,48 @@ abstract class Front2Controller extends FrontBaseController
     }
 
     // 入力フォームの評価
-    protected function _confirm(Request $request, $select)
+    protected function _confirm(Request $request, $urlController, $select)
     {
         $validator = $this->_validation($request, $select);
         if(! is_null($validator)) {
             return back()->withInput()->withErrors($validator);
         }
 
-        $params = $this->_entry($select);
+        $params = $this->_entry($urlController, $select);
         $params['request'] = $request;
+        $params['act'] = 'reg';
 
         // 未登録の時
         // $data = $this->_show_post_page($data);
         // $data=$this->_set_message_confirm($data);
+
+        return $params;
+    }
+
+    // レコード登録と受付表表示
+    protected function _regist(Request $request, $select)
+    {
+        // $validator = $this->_validation($request, $select);
+        // if(! is_null($validator)) {
+        //     return back()->withInput()->withErrors($validator);
+        // }
+
+        $params = $this->_entry($urlController, $select);
+
+        // 受付レコード更新
+        $acceptModel = new Accept();
+        $accept_no = $this->accept->setAcceptNo(Session::get('ft_id'));
+
+        // 受付明細レコード削除と追加
+        $this->_RegenAcceptDetail($select);
+
+        // メールデータ作成
+        $mailData = []; 
+        $this->_generateMailData($this->order, $this->accept, $mailData);
+
+        // メール送信
+        $Mailer = new ReturnAccepted($mailData);
+        Mail::to($request->email)->send($Mailer);
 
         return $params;
     }

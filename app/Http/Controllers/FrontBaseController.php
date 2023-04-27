@@ -90,6 +90,31 @@ abstract class FrontBaseController extends Controller
 		// $this->set_find_key();
     }
 
+	// 返品商品名と数量の配列
+	protected function _get_returns($request)
+	{
+		$inputs = $request->input();
+		$returns = [];
+		foreach ($inputs as $key => $in) {
+			$h = mb_substr($key, 0, 2);
+
+			if($h != "s_")	continue;	// 数量項目以外はスキップ
+
+			$tmp = explode("_", $key);
+			if($in == 0 || (! $in))	continue;		// 数量ゼロはスキップ
+
+			if($in == -1)	// 10 以上
+			{
+				$returns[$tmp[1]] = $inputs["t_".$tmp[1]];
+			}
+			else
+			{
+				$returns[$tmp[1]] = $in;
+			}
+		}
+		return $returns;
+	}		
+
     public function init()
     {
 		

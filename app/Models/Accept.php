@@ -134,5 +134,27 @@ class Accept extends Model
     {
         return ($this->password == $password);
     }
+
+    // accept_no に最大値を割り当てる
+    public function setAcceptNo($id)
+    {
+        $accept = self::firstById($id);
+        if(is_null($accept))    return null;
+        if(! empty($accept->accept_no)) return null;
+
+        $yyyy = date('Y');
+        $pre_no = self::where(accept_no, '<>', '')->max('accept_no');
+        $wyyyy = substr($pre_no, 0, 4);
+        if($wyyyy == $yyyy)
+        {
+            $accept->accept_no = $pre_no + 1;
+        }
+        else
+        {
+            $accept->accept_no = $yyyy . "00001";
+        }
+        $accept->save();
+        return $accept->accept_no;
+    }
     
 }

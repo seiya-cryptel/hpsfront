@@ -39,8 +39,7 @@ Route::get('/sizeexchangesecond', [SizeExchangeSecondController::class, 'index']
 Route::get('/sizeexchangesecond/no', [SizeExchangeSecondController::class, 'no']);  // 同意できない
 Route::get('/sizeexchangesecond/entry/{no}', [SizeExchangeSecondController::class, 'entry']);
 Route::post('/sizeexchangesecond/confirm/{no}', [SizeExchangeSecondController::class, 'confirm']);
-
-Route::get('/sizeexchangesecond/reg/{no}', [SizeExchangeSecondController::class, 'reg']);
+Route::post('/sizeexchangesecond/reg/{no}', [SizeExchangeSecondController::class, 'reg']);
 
 // 商品不良等
 Route::get('/return1first', [Return1FirstController::class, 'index']);

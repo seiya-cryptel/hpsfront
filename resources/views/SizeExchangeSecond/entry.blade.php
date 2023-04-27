@@ -6,16 +6,6 @@
 
 @section('content')
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 <div class="well">
     <button type="button" class="hidden-xs btn btn-info btn-lg btn-block" ><strong>サイズ交換</strong>  　<small>（安全靴、作業靴、ユニフォームのサイズ交換）</small></button>
     <button type="button" class="visible-xs btn btn-info btn-lg btn-block" ><strong>サイズ交換</strong>  　<br><small>（安全靴、作業靴、<br>ユニフォームのサイズ交換）</small></button>
@@ -39,12 +29,19 @@
     -->
     </script>
 
-    <div class="row col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-        <h4>対象の商品欄により数量を選択してください。<br>また下段にて集荷先情報の確認、交換理由・ご希望のサイズ等をご入力ください。
-        </h4>
-    </div>
+    <?php echo $message->comment1; ?>
 
-    {{ Form::open(['url' => '/sizeexchangesecond/confirm/' . $select . '/', 'id' => "f", 'name' => "f", 'method' => "post", 'accept-charset' => "utf-8"]) }}
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{ Form::open(['url' => '/' . $urlController . '/confirm/' . $select . '/', 'id' => "f", 'name' => "f", 'method' => "post", 'accept-charset' => "utf-8"]) }}
         <input type="hidden" name="select" value="{{ $select }}" />
         <input type="hidden" name="order_id" value="{{ $order_id }}" />
 
@@ -213,15 +210,19 @@
 
         <div class="clearfix"></div>
 
+        <?php echo $message->comment2; ?>
+
         <div class="hidden-xs text-center" style="margin-top:30px;">
-            <button type="button" class="btn btn-success btn-lg "  onclick="location.href='/sizeexchange_second/';" >前のページに戻る</button>
+            <button type="button" class="btn btn-success btn-lg "  onclick="location.href='/{{  $urlController }}/';" >前のページに戻る</button>
             <button type="submit" class="btn btn-success btn-lg " >　　　次へ　　　</button>
         </div>
         <div class="visible-xs text-center" style="margin-top:30px;">
-            <button type="button" class="btn btn-success btn-lg "  onclick="location.href='/sizeexchange_second/';" >前のページに戻る</button><br><br>
+            <button type="button" class="btn btn-success btn-lg "  onclick="location.href='/{{  $urlController }}/';" >前のページに戻る</button><br><br>
             <button type="submit" class="btn btn-success btn-lg " >　　　次へ　　　</button>
         </div>
     {{ Form::close() }}
+
+    <?php echo $message->comment3; ?>
 
 </div>
 

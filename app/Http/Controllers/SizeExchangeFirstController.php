@@ -27,7 +27,7 @@ class SizeExchangeFirstController extends Front1Controller
     {
 		$pwd = parent::reg($request);
 
-        return view('sizeexchangefirst/pwd', ['password' => $pwd]); 
+        return view('SizeExchangeFirst/pwd', ['password' => $pwd]); 
     }
 
     // ログインパスワード表示

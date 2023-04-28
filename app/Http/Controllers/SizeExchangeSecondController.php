@@ -8,6 +8,13 @@ use App\Models\Message;
 
 class SizeExchangeSecondController extends Front2Controller
 {
+    function __construct() {
+		parent::__construct();
+
+		$this->section_cd = "sizeexchange_second";
+		$this->mail_id = config('config.MAIL_SIZEEXCHANGE_ACCEPT');
+		$this->request_content_class = config('config.REQUEST_CONTENT_SIZEEXCHANGE');
+    }
 
     // 説明
     function index() {
@@ -71,7 +78,7 @@ class SizeExchangeSecondController extends Front2Controller
             return redirect('/');
         }
 
-        $params = $this->_regist($request, $no);
+        $params = $this->_regist($request, 'sizeexchangesecond', $no);
 
         // メッセージレコード
         $messageModel = new Message();

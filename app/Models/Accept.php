@@ -143,7 +143,7 @@ class Accept extends Model
         if(! empty($accept->accept_no)) return null;
 
         $yyyy = date('Y');
-        $pre_no = self::where(accept_no, '<>', '')->max('accept_no');
+        $pre_no = self::where('accept_no', '<>', '')->max('accept_no');
         $wyyyy = substr($pre_no, 0, 4);
         if($wyyyy == $yyyy)
         {

@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Session;
 
 use Mail;
 
+use App\Http\Controllers\ImageBarCodeController;
+
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Accept;
+use App\Models\AcceptDetail;
 use App\Models\MailTemplate;
 use App\Models\PickupTime;
 use App\Models\BusinessDay;
@@ -143,11 +146,11 @@ abstract class Front2Controller extends FrontBaseController
         return $hasError ? $validator : null;
     }
 
-    protected function _RegenAcceptDetail($select)
+    protected function _RegenerateAcceptDetail(Request $request, $select)
     {
         // 既存明細レコード削除
         $acceptDetailModel = new AcceptDetail();
-        $acceptDetailModel->firstById(Session::get('ft_id'));
+        $acceptDetailModel->where('accept_id', Session::get('ft_id'))->delete();
 
         $returns = $this->_get_returns($request);   // 返品・交換対象
         $orderDetailModel = new OrderDetail();
@@ -270,7 +273,7 @@ abstract class Front2Controller extends FrontBaseController
     }
 
     // レコード登録と受付表表示
-    protected function _regist(Request $request, $select)
+    protected function _regist(Request $request, $urlController, $select)
     {
         // $validator = $this->_validation($request, $select);
         // if(! is_null($validator)) {
@@ -281,10 +284,10 @@ abstract class Front2Controller extends FrontBaseController
 
         // 受付レコード更新
         $acceptModel = new Accept();
-        $accept_no = $this->accept->setAcceptNo(Session::get('ft_id'));
+        $accept_no = $acceptModel->setAcceptNo(Session::get('ft_id'));
 
         // 受付明細レコード削除と追加
-        $this->_RegenAcceptDetail($select);
+        $this->_RegenerateAcceptDetail($request, $select);
 
         // メールデータ作成
         $mailData = []; 
@@ -292,7 +295,10 @@ abstract class Front2Controller extends FrontBaseController
 
         // メール送信
         $Mailer = new ReturnAccepted($mailData);
-        Mail::to($request->email)->send($Mailer);
+        Mail::to($this->accept->email)->send($Mailer);
+
+        // バーコード
+        $params['barcode'] = DNS1D::getBarcodeHTML($accept_no, "C39", 1, 70, 'black', 12);
 
         return $params;
     }

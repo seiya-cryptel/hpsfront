@@ -23,6 +23,7 @@
     <div class="text-left" style="margin-top:30px;">
         <button type="button" class="hidden-xs btn btn-success  btn-lg hidden-print"   onClick="Javascript:window.print();" >受付表印刷</button>
         <img src="/imagebarcode/show/202302047/" class="pull-right">
+        <?php echo $barcode; ?>
     </div>
 
     <div class="clearfix "></div>

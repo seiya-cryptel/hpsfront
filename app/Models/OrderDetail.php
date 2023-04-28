@@ -29,7 +29,7 @@ class OrderDetail extends Model
     public function firstByOrderIdRowNo($order_id, $row_no)
     {
         $rec = OrderDetail::where('order_id', $order_id)->where('row_no', $row_no)->first();
-        return $recs;
+        return $rec;
     }
     
 }

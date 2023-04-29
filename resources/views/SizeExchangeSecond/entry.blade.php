@@ -1,5 +1,5 @@
 <?php 
-    require_once(env('APLICATION_PATH') . '/app/Helpers/myform_helper.php');
+    require_once(env('APPLICATION_PATH') . '/app/Helpers/myform_helper.php');
 ?>
 
 @extends('layout')

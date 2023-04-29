@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Order;
-
 use App\Models\Message;
 
 class SizeExchangeFirstController extends Front1Controller

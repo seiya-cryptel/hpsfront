@@ -23,7 +23,9 @@ use App\Http\Controllers\FTopController;
 use App\Http\Controllers\SizeExchangeFirstController;
 use App\Http\Controllers\SizeExchangeSecondController;
 use App\Http\Controllers\Return1FirstController;
+use App\Http\Controllers\Return1SecondController;
 use App\Http\Controllers\Return2FirstController;
+use App\Http\Controllers\Return2SecondController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ImageBarCodeController;
 
@@ -47,7 +49,6 @@ Route::post('/return1first', [Return1FirstController::class, 'reg']);
 Route::get('/returnReturn1first/pwd', [ReturnReturn1FirstController::class, 'pwd']);
 
 Route::get('/return1second', [Return1SecondController::class, 'index']);  // サイズ交換について
-Route::get('/return1second/no', [Return1SecondController::class, 'no']);  // 同意できない
 Route::get('/return1second/entry/{no}', [Return1SecondController::class, 'entry']);
 Route::post('/return1second/confirm/{no}', [Return1SecondController::class, 'confirm']);
 Route::post('/return1second/reg/{no}', [Return1SecondController::class, 'reg']);
@@ -67,11 +68,11 @@ Route::post('/return2second/reg/{no}', [Return2SecondController::class, 'reg']);
 Route::get('/login/index/{login_id}', [LoginController::class, 'index']);
 Route::post('/login/check/{login_id}', [LoginController::class, 'check']);
 
-// バーコード画像生成 テスト用
+// バーコード画像生成
 // Route::get('/imagebarcode/show/{code}', [ImageBarCodeController::class, 'show']);
-// Route::get('/imagebarcode/show/{code}', function($code){
+Route::get('/imagebarcode/show/{code}', function($code){
     // echo DNS1D::getBarcodeHTML($code, "C128", 3, 70, 'black', true);
     // echo DNS1D::getBarcodeHTML($code, "C39", 3, 70, 'black', true);
     // echo DNS1D::getBarcodeHTML($code, "QRCODE");
-//     echo DNS1D::getBarcodeHTML($code, "C39", 1, 70, 'black', 12);
-// });
+    echo DNS1D::getBarcodeHTML($code, "C39", 1, 70, 'black', 12);
+});

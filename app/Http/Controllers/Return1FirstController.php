@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Return1FirstController extends FrontBaseController
+use App\Models\Order;
+use App\Models\Message;
+
+class Return1FirstController extends Front1Controller
 {
     function __construct() {
 		parent::__construct();
@@ -16,15 +19,28 @@ class Return1FirstController extends FrontBaseController
 
     // GET
 	function index() {
-        return view('Return1First/index', []);
+        $params = [];
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(11);
+
+        return view('Return1First/index', $params);
     }
 
     // POST
 	public function reg(Request $request)
     {
-		$pwd = parent::reg($request);
+        $params = [];
 
-        return view('return1first/pwd', ['password' => $pwd]); 
+		$pwd = parent::reg($request);
+        $params['password'] = $pwd;
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(21);
+
+        return view('return1first/pwd', $params); 
     }
 
     // ログインパスワード表示

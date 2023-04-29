@@ -10,13 +10,19 @@ class Return2FirstController extends FrontBaseController
     function __construct() {
 		parent::__construct();
 
-		$this->section_cd = "return1_first";
+		$this->section_cd = "return2_first";
 		$this->mail_id = config('config.MAIL_RETURN02_PASS');
 		$this->request_content_class = config('config.REQUEST_CONTENT_CLASS_RETURN2');
     }
 
     // GET
 	function index() {
+        $params = [];
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(11);
+
         return view('Return2First/index', []);
     }
 

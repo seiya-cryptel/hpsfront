@@ -14,56 +14,35 @@
     <div class="hidden-xs row privacy center-block">
         <h2 class="text-left"><span class="t-red">●受付内容</span></h2>
         <table class="table table-striped table-bordered table-condensed" >
-        <tr>
-            <th >オーダＩＤ </th>
-            <td class="text-left">{{ $order_id }}
-            </td>
-        </tr>
-        <tr>
-            <th >ご注文者様 </th>
-            <td  class="text-left">{{ $order->order_name }}　様
-            </td>
-        </tr>
-        <tr>
-            <th >メールアドレス</th>
-            <td  class="text-left">{{ $accept->email }}　
-            </td>
-        </tr>
-        <tr>
-            <th >対象商品</th>
-            <td  class="text-left">
-                @foreach($returns as $no=>$val)
-                    {{ $orderDetails[$no]->product_nm }}&emsp;&emsp;&emsp;&emsp;数量：{{ $val }}<br>
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <th >返品理由/ご意見</th>
-            <td  class="text-left">　
-                {{ nl2br($request['comment']) }}
-            </td>
-        </tr>
-        <tr>
-            <th >集荷先情報</th>
-            <td  class="text-left">
-                〒{{ $request['post1'] }}-{{ $request['post2'] }}<br>
-                {{ $request['address'] }}<br>
-                @if($request['company'])
-                    {{ $request['company'] }}<br>
-                @endif
-                @if($request['division'])
-                    {{ $request['division'] }}<br>
-                @endif
-                {{ $request['shipping_name'] }} 様<br>
-                電話番号：{{ $request['shipping_tel'] }}
-            </td>
-        </tr>
-        <tr>
-            <th >集荷日時</th>
-            <td  class="text-left">
-                {{ $pickupDays[$accept['pickup_date']] }} {{ $pickupTimes[$accept['pickup_time']] }}
-            </td>
-        </tr>
+            <tr>
+                <th >オーダＩＤ </th>
+                <td class="text-left">{{ $order_id }}
+                </td>
+            </tr>
+            <tr>
+                <th >ご注文者様 </th>
+                <td class="text-left">{{ $order->order_name }}
+                </td>
+            </tr>
+            <tr>
+                <th >メールアドレス </th>
+                <td class="text-left">{{ $accept->email }}
+                </td>
+            </tr>
+            <tr>
+                <th >対象商品</th>
+                <td  class="text-left">
+                    @foreach($returns as $no=>$val)
+                        {{ $orderDetails[$no]->product_nm }}&emsp;&emsp;&emsp;&emsp;数量：{{ $val }}<br>
+                    @endforeach
+                </td>
+            </tr>
+                <tr>
+                <th >返品理由/ご意見</th>
+                <td  class="text-left">　
+                    {{ nl2br($request['comment']) }}
+                </td>
+            </tr>
         </table>
 
     </div>
@@ -71,56 +50,35 @@
     <div class="visible-xs row ">
         <h2 class="text-left"><span class="t-red">●受付内容</span></h2>
         <table class="table table-striped table-bordered table-condensed" >
-        <tr>
-            <th >オーダＩＤ </th>
-            <td class="text-left">{{ $order_id }}
-            </td>
-        </tr>
-        <tr>
-            <th >ご注文者様 </th>
-            <td  class="text-left">{{ $order->order_name }}　様
-            </td>
-        </tr>
-        <tr>
-            <th >メールアドレス</th>
-            <td  class="text-left">{{ $accept->email }}　
-            </td>
-        </tr>
-        <tr>
-            <th >対象商品</th>
-            <td  class="text-left">
-                @foreach($returns as $no=>$val)
-                    {{ $orderDetails[$no]->product_nm }}&emsp;&emsp;&emsp;&emsp;数量：{{ $val }}<br>
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <th >返品理由/ご意見</th>
-            <td  class="text-left">　
-                {{ nl2br($request['comment']) }}
-            </td>
-        </tr>
-        <tr>
-            <th >集荷先情報</th>
-            <td  class="text-left">
-                〒{{ $request['post1'] }}-{{ $request['post2'] }}<br>
-                {{ $request['address'] }}<br>
-                @if($request['company'])
-                    {{ $request['company'] }}<br>
-                @endif
-                @if($request['division'])
-                    {{ $request['division'] }}<br>
-                @endif
-                {{ $request['shipping_name'] }} 様<br>
-                電話番号：{{ $request['shipping_tel'] }}
-            </td>
-        </tr>
-        <tr>
-            <th >集荷日時</th>
-            <td  class="text-left">
-                {{ $pickupDays[$accept['pickup_date']] }} {{ $pickupTimes[$accept['pickup_time']] }}
-            </td>
-        </tr>
+            <tr>
+                <th >オーダＩＤ </th>
+                <td class="text-left">{{ $order_id }}
+                </td>
+            </tr>
+            <tr>
+                <th >ご注文者様 </th>
+                <td  class="text-left">{{ $order->order_name }}　様
+                </td>
+            </tr>
+            <tr>
+                <th >メールアドレス</th>
+                <td  class="text-left">{{ $accept->email }}　
+                </td>
+            </tr>
+            <tr>
+                <th >対象商品</th>
+                <td  class="text-left">
+                    @foreach($returns as $no=>$val)
+                        {{ $orderDetails[$no]->product_nm }}&emsp;&emsp;&emsp;&emsp;数量：{{ $val }}<br>
+                    @endforeach
+                </td>
+            </tr>
+            <tr>
+                <th >返品理由/ご意見</th>
+                <td  class="text-left">　
+                    {{ nl2br($request['comment']) }}
+                </td>
+            </tr>
         </table>
     </div>
 

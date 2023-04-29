@@ -1,7 +1,7 @@
 
 @csrf
 
-<input type="hidden" name="user_id" value="" />
+<input type="hidden" name="user_id" value="{{ old('user_id') }}" />
 
 <main id="form-main" role="form-main" class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
     <div class="entry-content">
@@ -41,7 +41,7 @@
                     <span class="notes">ご連絡可能なメールアドレスを入力下さい<br>
                     （ご注文時と異なるアドレスでも可能です）
                     </span>
-                    @error('tel')
+                    @error('email')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </td>
@@ -52,7 +52,7 @@
                     <input name="email2" type="text" id="email2" value="{{ old('email2') }}"  MAXLENGTH="50" size="65"  style="ime-mode: inactive;" class="form-control">
                     <span class="notes">【確認用】3.に入力いただきましたメールアドレスを再度入力下さい<br>
                     </span>
-                    @error('tel')
+                    @error('email2')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </td>

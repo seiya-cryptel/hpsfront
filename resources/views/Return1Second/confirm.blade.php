@@ -63,7 +63,7 @@
         <tr>
             <th >集荷日時</th>
             <td  class="text-left">
-                {{ $pickupDays[$accept['pickup_date']] }} {{ $pickupTimes[$accept['pickup_time']] }}
+                {{ $pickupDays[$request['pickup_date']] }} {{ $pickupTimes[$request['pickup_time']] }}
             </td>
         </tr>
         @endif

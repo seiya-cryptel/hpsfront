@@ -70,7 +70,7 @@
                     </tr>
 
                     <tr>
-                        <th class="">交換数量</th>
+                        <th class="">返品数量</th>
                         <td >
                             <?php
                                 $s_no = 's_' . $orderDetail->row_no;
@@ -115,80 +115,7 @@
                     </tr>
 
                     @endforeach
-
-                    <tr>
-                        <th rowspan="6">集荷先情報</th>
-                        <th colspan="2">郵便番号</th>
-                        <td >〒<input  name="post1" style="ime-mode: disabled;" type="post1" size="3" id="post1" value="{{ old('post1') }}">
-                            -<input  name="post2" style="ime-mode: disabled;" type="tel" size="4" id="post2" value="{{ old('post2') }}"><span class="notes">（半角数字）　例.486-0012</span>
-                            @error('post1')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            @error('post2')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th colspan="2">住所</th>
-                        <td ><input name="address" type="text" id="address" value="{{ old('address') }}" MAXLENGTH="200"  size="80" >
-                            @error('address')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th colspan="2">会社名</th>
-                        <td ><input name="company" type="text" id="company" value="{{  old('company') }}" MAXLENGTH="200"  size="80" >
-                            @error('company')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">部署名</th>
-                        <td ><input name="division" type="text" id="division" value="{{ old('division') }}" MAXLENGTH="200"  size="80" >
-                            @error('division')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th colspan="2">電話番号</th>
-                        <td  ><input name="shipping_tel" type="tel" id="shipping_tel" value="{{ old('shipping_tel') }}"  MAXLENGTH="20" size="20"   style="ime-mode: inactive;" >
-                            <span class="notes">（半角数字）例.03-1234-5678</span>
-                            @error('shipping_tel')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th colspan="2">集荷先名</th>
-                        <td ><input name="shipping_name" type="text" id="shipping_name" value="{{ old('shipping_name') }}" MAXLENGTH="100"  size="80" >
-                            @error('shipping_name')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <th   colspan="3">集荷日情報</th>
-                        <td  colspan="1"><span class="notes">※お手元の商品を配送会社より伝票をお持ちしてお引取りに伺わせていただきます。入力翌日より、当社2営業日目以降にて日程よりご都合の宜しい日時をご指定下さい。</span><br>
-                        日程{{ Form::select('pickup_date', $pickupDays, $pickup_date ?? null, []) }}<br>
-                        @error('pickup_date')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        時間{{ Form::select('pickup_time', $pickupTimes, $pickup_time ?? null, []) }}<br>
-                        @error('pickup_time')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        </td>
-                    </tr>
-                </table>
+                    </table>
 
                     <div class="form_table">
                         <table>

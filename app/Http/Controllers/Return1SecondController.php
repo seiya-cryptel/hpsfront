@@ -22,7 +22,7 @@ class Return1SecondController extends Front2Controller
 
         // メッセージレコード
         $messageModel = new Message();
-        $params['message'] = $messageModel->firstById(44);
+        $params['message'] = $messageModel->firstById(41);
 
         return view('Return1Second/index', $params);
     }

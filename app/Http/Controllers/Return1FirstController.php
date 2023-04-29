@@ -40,7 +40,7 @@ class Return1FirstController extends Front1Controller
         $messageModel = new Message();
         $params['message'] = $messageModel->firstById(21);
 
-        return view('return1first/pwd', $params); 
+        return view('Return1First/pwd', $params); 
     }
 
     // ログインパスワード表示

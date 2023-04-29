@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Message;
 
-class Return2FirstController extends FrontBaseController
+class Return2FirstController extends Front1Controller
 {
 
     function __construct() {
@@ -41,7 +41,7 @@ class Return2FirstController extends FrontBaseController
         $messageModel = new Message();
         $params['message'] = $messageModel->firstById(24);
 
-        return view('return2first/pwd', $params); 
+        return view('Return2First/pwd', $params); 
     }
 
     // ログインパスワード表示

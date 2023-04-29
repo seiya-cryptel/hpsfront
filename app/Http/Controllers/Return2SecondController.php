@@ -45,7 +45,7 @@ class Return2SecondController extends Front2Controller
             return redirect('/');
         }
 
-        $params = $this->_entry('return2econd', $no);
+        $params = $this->_entry('return2second', $no);
 
         // メッセージレコード
         $messageModel = new Message();

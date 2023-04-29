@@ -262,6 +262,17 @@ abstract class Front2Controller extends FrontBaseController
         }
 
         $params = $this->_entry($urlController, $select);
+
+        // OrderDetail レコード配列を作り直す
+        $orderDetailModel = new OrderDetail();
+        $orderDetails = $orderDetailModel->getByOrderId(Session::get('ft_order_id'));
+        $confirmOrderDetails = [];
+        foreach($orderDetails as $orderDetail)
+        {
+            $confirmOrderDetails[$orderDetail->row_no] = $orderDetail;
+        }
+        $params['orderDetails'] = $confirmOrderDetails;
+
         $params['request'] = $request;
         $params['act'] = 'reg';
 
@@ -284,7 +295,9 @@ abstract class Front2Controller extends FrontBaseController
 
         // 受付レコード更新
         $acceptModel = new Accept();
-        $accept_no = $acceptModel->setAcceptNo(Session::get('ft_id'));
+        $acceptModel->setAcceptNo(Session::get('ft_id'));
+        $accept = $acceptModel->firstById(Session::get('ft_id'));
+        $accept_no = $accept->accept_no;
 
         // 受付明細レコード削除と追加
         $this->_RegenerateAcceptDetail($request, $select);

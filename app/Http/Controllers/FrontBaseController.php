@@ -84,7 +84,7 @@ abstract class FrontBaseController extends Controller
         $tmp2 = explode('\\', $tmp1[0]);
         $this->method = $tmp1[1];
         $this->controller = end($tmp2);
-		$this->regMail_login_url = url('/', null, true) . "/login/index/";
+		$this->regMail_login_url = env('APP_URL') . "/login/index/";
 
 		$this->init();
 		// $this->set_find_key();

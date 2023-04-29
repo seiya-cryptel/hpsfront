@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Order;
 
+use App\Models\Message;
+
 class SizeExchangeFirstController extends Front1Controller
 {
     function __construct() {
@@ -19,15 +21,28 @@ class SizeExchangeFirstController extends Front1Controller
     // GET
 	public function index()
     {
-        return view('SizeExchangeFirst/index', []);
+        $params = [];
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(13);
+
+        return view('SizeExchangeFirst/index', $params);
     }
 
     // POST
 	public function reg(Request $request)
     {
-		$pwd = parent::reg($request);
+        $params = [];
 
-        return view('SizeExchangeFirst/pwd', ['password' => $pwd]); 
+		$pwd = parent::reg($request);
+        $params['password'] = $pwd;
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(23);
+
+        return view('SizeExchangeFirst/pwd', $params); 
     }
 
     // ログインパスワード表示

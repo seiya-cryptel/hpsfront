@@ -36,6 +36,9 @@
 
     <form action="/login/check/{{ $login_id }}" id="" method="post" accept-charset="utf-8">
         @csrf
+        
+        <?php echo $message->comment1; ?>
+
         <div class="clearfix"></div>
         <main id="form-main" role="form-main" class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
             <div class="entry-content">
@@ -53,10 +56,15 @@
         </main>
         <div class="clearfix"></div>
 
+        <?php echo $message->comment2; ?>
+
         <div class="text-center" style="margin-top:10px;">
             <button type="submit" class="btn btn-success btn-lg " >認証チェック</button>
         </div>
     </form>
+
+    <?php echo $message->comment3; ?>
+
 </div>
 
 @endsection

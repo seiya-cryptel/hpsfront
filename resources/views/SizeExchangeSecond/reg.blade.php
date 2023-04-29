@@ -22,8 +22,7 @@
     <h3>商品お取替えをご希望の場合には、商品手配が完了しましたら、改めまして、発送日をご連絡させていただきますので、お待ちくださいませ。</h3>
     <div class="text-left" style="margin-top:30px;">
         <button type="button" class="hidden-xs btn btn-success  btn-lg hidden-print"   onClick="Javascript:window.print();" >受付表印刷</button>
-        <img src="/imagebarcode/show/202302047/" class="pull-right">
-        <?php echo $barcode; ?>
+        <div class="mb-3"><?php echo $barcode; ?></div>
     </div>
 
     <div class="clearfix "></div>

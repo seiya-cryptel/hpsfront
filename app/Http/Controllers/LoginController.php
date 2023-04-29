@@ -53,6 +53,11 @@ class LoginController extends FrontBaseController
         $params = [];
         $params['login_id'] = $login_id;
         $params['request_content_class'] = $accept->request_content_class;
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(30);
+
         return view('Login/index', $params);
     }
 

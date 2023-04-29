@@ -63,15 +63,8 @@
     </div>
 </main>
 
-<div class="row col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-    <p class="lead"><br>※上記内容に間違いがないか確認をいただきまして、次へボタンを押して下さい。<br>
-    1.オーダＩＤと2.電話番号に間違いがない場合は、3.で入力いただきましたメールアドレスへ
-    今後の手続きに関するＵＲＬが送信されますので、そちらよりお手続きをお進めください。<br><br>
+<?php echo $message->comment2; ?>
 
-    ※メールが届かない場合は、メールアドレスの入力間違いか、迷惑メール設定等の理由が考えられます。<br>
-    設定を解除して、再度上記情報をご入力くださいますようお願い致します。
-    </p>
-</div>
 <div class="text-center" style="margin-top:10px;">
     <button type="submit" class="btn btn-success btn-lg " >次へ（メール送信）</button>
 </div>

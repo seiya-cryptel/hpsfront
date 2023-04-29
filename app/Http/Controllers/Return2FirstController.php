@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Order;
+use App\Models\Message;
+
 class Return2FirstController extends FrontBaseController
 {
 
@@ -21,17 +24,24 @@ class Return2FirstController extends FrontBaseController
 
         // メッセージレコード
         $messageModel = new Message();
-        $params['message'] = $messageModel->firstById(11);
+        $params['message'] = $messageModel->firstById(14);
 
-        return view('Return2First/index', []);
+        return view('Return2First/index', $params);
     }
 
     // POST
 	public function reg(Request $request)
     {
-		$pwd = parent::reg($request);
+        $params = [];
 
-        return view('return2first/pwd', ['password' => $pwd]); 
+		$pwd = parent::reg($request);
+        $params['password'] = $pwd;
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(24);
+
+        return view('return2first/pwd', $params); 
     }
 
     // ログインパスワード表示

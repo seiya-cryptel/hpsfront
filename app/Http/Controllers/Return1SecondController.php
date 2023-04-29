@@ -11,9 +11,9 @@ class Return1SecondController extends Front2Controller
     function __construct() {
 		parent::__construct();
 
-		$this->section_cd = "return1_second";
-		$this->mail_id = config('config.MAIL_RETURN01_ACCEPT');
-		$this->request_content_class = config('config.REQUEST_CONTENT_CLASS_RETURN1');
+		$this->section_cd = "return2_second";
+		$this->mail_id = config('config.MAIL_RETURN02_ACCEPT');
+		$this->request_content_class = config('config.REQUEST_CONTENT_CLASS_RETURN2');
     }
 
     // 説明
@@ -22,7 +22,7 @@ class Return1SecondController extends Front2Controller
 
         // メッセージレコード
         $messageModel = new Message();
-        $params['message'] = $messageModel->firstById(41);
+        $params['message'] = $messageModel->firstById(44);
 
         return view('Return1Second/index', $params);
     }

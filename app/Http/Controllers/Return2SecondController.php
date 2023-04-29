@@ -27,6 +27,17 @@ class Return2SecondController extends Front2Controller
         return view('Return2Second/index', $params);
     }
 
+    // 同意なし
+    function no() {
+        $params = [];
+
+        // メッセージレコード
+        $messageModel = new Message();
+        $params['message'] = $messageModel->firstById(54);
+
+        return view('Return2Second/no', $params);
+    }
+
     // 同意あり　入力フォーム
     function entry($no) {
         if(! $this->_chk_login())
@@ -35,23 +46,6 @@ class Return2SecondController extends Front2Controller
         }
 
         $params = $this->_entry('return2econd', $no);
-
-        // メッセージレコード
-        $messageModel = new Message();
-        $params['message'] = $messageModel->firstById(54);
-
-        return view('Return2Second/entry', $params);
-    }
-
-    // 入力フォーム
-    //  $select 1: お取替え, 2: 返品
-    function entry($select) {
-        if(! $this->_chk_login())
-        {
-            return redirect('/');
-        }
-
-        $params = $this->_entry('return2second', $select);
 
         // メッセージレコード
         $messageModel = new Message();
@@ -72,7 +66,7 @@ class Return2SecondController extends Front2Controller
 
         // メッセージレコード
         $messageModel = new Message();
-        $params['message'] = $messageModel->firstById(71);
+        $params['message'] = $messageModel->firstById(74);
 
         return view('Return2Second/confirm', $params);
     }
@@ -88,7 +82,7 @@ class Return2SecondController extends Front2Controller
 
         // メッセージレコード
         $messageModel = new Message();
-        $params['message'] = $messageModel->firstById(81);
+        $params['message'] = $messageModel->firstById(84);
 
         return view('Return2Second/reg', $params);
     }

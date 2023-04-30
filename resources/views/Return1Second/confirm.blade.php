@@ -103,6 +103,7 @@
                 {{ nl2br($request['comment']) }}
             </td>
         </tr>
+        @if($select == 2)
         <tr>
             <th >集荷先情報</th>
             <td  class="text-left">
@@ -118,11 +119,10 @@
                 電話番号：{{ $request['shipping_tel'] }}
             </td>
         </tr>
-        @if($select == 2)
         <tr>
             <th >集荷日時</th>
             <td  class="text-left">
-                {{ $pickupDays[$accept['pickup_date']] }} {{ $pickupTimes[$accept['pickup_time']] }}
+                {{ $pickupDays[$request['pickup_date']] }} {{ $pickupTimes[$request['pickup_time']] }}
             </td>
         </tr>
         @endif

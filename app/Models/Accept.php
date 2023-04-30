@@ -108,7 +108,7 @@ class Accept extends Model
     public function existsByOrderId($order_id)
     {
         $accepts = Accept::where('order_id', $order_id)->get();
-        return isn_null($accept) ? false : true;
+        return ($accepts->count() == 0) ? false : true;
     }
 
     // オーダIDで返品・交換処理済みか調べる

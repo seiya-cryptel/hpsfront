@@ -28,49 +28,57 @@
         <table class="table table-striped table-bordered table-condensed" >
         <tr>
             <th >①受付番号 </th>
-            <td colspan="2" class="text-left">202302047　（印刷不可能な場合には受付番号を「交換・返品確認書」へご記入ください。）
+            <td colspan="2" class="text-left">{{ $accept->accept_no }}　（印刷不可能な場合には受付番号を「交換・返品確認書」へご記入ください。）
             </td>
         </tr>
         <tr>
             <th >オーダＩＤ </th>
-            <td colspan="2" class="text-left">9911124275						</td>
+            <td colspan="2" class="text-left">{{ $order_id }}</td>
         </tr>
         <tr>
             <th >お客様名 </th>
-            <td  colspan="2" class="text-left">test3　様
+            <td  colspan="2" class="text-left">{{ $accept->name }}　様
             </td>
         </tr>
         <tr>
             <th >メールアドレス</th>
-            <td  colspan="2" class="text-left">seiya@cryptel.co.jp　
+            <td  colspan="2" class="text-left">{{ $accept->email }}　
             </td>
         </tr>
+        @foreach($returns as $no => $val)
         <tr>
-            <th rowspan="1">対象商品</th>
+            @if($loop->first)
+            {
+                <th rowspan="{{ count($returns) }}">対象商品</th>
+            }
+            @endif
             <td  class="text-left">
-                NO.1 2105105405 男女兼用　静電作業靴　エレパス　Ｍ１０３　ホワイト　２３．０ｃｍ						
+                {{ $orderDetails[$no]->product_nm }}
             </td>
             <td  class="text-left">
-                数量：1<br>
+                数量：{{ $val }}<br>
             </td>
         </tr>
+        @endforeach
         <tr>
             <th >希望交換サイズ/ご意見等</th>
-            <td  colspan="2" class="text-left">小さいサイズ　
+            <td  colspan="2" class="text-left">{{ nl2br($accept->comment) }}
             </td>
         </tr>
 
         <tr>
             <th >集荷先情報</th>
-            <td  colspan="2" class="text-left">〒333-3333<br>大阪府八尾市　3333333<br>
-                株式会社bbb test3<br>							aaa test3 様<br>電話番号：00000000003						
+            <td  colspan="2" class="text-left">〒{{ $accept->post }}<br>{{ $accept->address }}<br>
+                {{ $accept->company }}<br>
+                {{ $accept->company }} 様<br>
+                電話番号：{{ $accept->shipping_tel }}						
             </td>
         </tr>
 
         <tr>
             <th >集荷日時</th>
             <td  colspan="2" class="text-left">
-                2023年4月23日　　 午前中（9時～12時）						
+                {{ $pickup_datetime }}						
             </td>
         </tr>
 
@@ -83,50 +91,60 @@
         <table class="table table-striped table-bordered table-condensed" >
         <tr>
             <th >①受付番号 </th>
-            <td colspan="2" class="text-left">202302047　（印刷不可能な場合には受付番号を「交換・返品確認書」へご記入ください。）
+            <td colspan="2" class="text-left">{{ $accept->accept_no }}　（印刷不可能な場合には受付番号を「交換・返品確認書」へご記入ください。）
             </td>
         </tr>
         <tr>
             <th >オーダＩＤ </th>
-            <td colspan="2" class="text-left">9911124275						
-
-            </td>
+            <td colspan="2" class="text-left">{{ $order_id }}</td>
         </tr>
         <tr>
             <th >お客様名 </th>
-            <td  colspan="2" class="text-left">test3　様
+            <td  colspan="2" class="text-left">{{ $accept->name }}　様
             </td>
         </tr>
         <tr>
             <th >メールアドレス</th>
-            <td  colspan="2" class="text-left">seiya@cryptel.co.jp　
+            <td  colspan="2" class="text-left">{{ $accept->email }}　
             </td>
         </tr>
+        @foreach($returns as $no => $val)
         <tr>
+            @if($loop->first)
+            {
+                <th rowspan="{{ count($returns) }}">対象商品</th>
+            }
+            @endif
             <td  class="text-left">
-                    NO.1 2105105405 男女兼用　静電作業靴　エレパス　Ｍ１０３　ホワイト　２３．０ｃｍ						
+                {{ $orderDetails[$no]->product_nm }}
             </td>
             <td  class="text-left">
-                    数量：1<br>
+                数量：{{ $val }}<br>
             </td>
         </tr>
+        @endforeach
         <tr>
             <th >希望交換サイズ/ご意見等</th>
-            <td  colspan="2" class="text-left">小さいサイズ　
+            <td  colspan="2" class="text-left">{{ nl2br($accept->comment) }}
             </td>
         </tr>
+
         <tr>
             <th >集荷先情報</th>
-            <td  colspan="2" class="text-left">〒333-3333<br>大阪府八尾市　3333333<br>
-                株式会社bbb test3<br>							aaa test3 様<br>電話番号：00000000003						
+            <td  colspan="2" class="text-left">〒{{ $accept->post }}<br>{{ $accept->address }}<br>
+                {{ $accept->company }}<br>
+                {{ $accept->company }} 様<br>
+                電話番号：{{ $accept->shipping_tel }}						
             </td>
         </tr>
+
         <tr>
             <th >集荷日時</th>
             <td  colspan="2" class="text-left">
-                    2023年4月23日　　 午前中（9時～12時）						
+                {{ $pickup_datetime }}						
             </td>
         </tr>
+
         </table>
     </div>
 

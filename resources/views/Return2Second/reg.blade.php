@@ -25,53 +25,45 @@
     <div class="hidden-xs row privacy center-block">
         <h2 class="text-left">●受付内容</h2>
         <table class="table table-striped table-bordered table-condensed" >
-        <tr>
-            <th >①受付番号 </th>
-            <td colspan="2" class="text-left">202302047　（印刷不可能な場合には受付番号を「交換・返品確認書」へご記入ください。）
-            </td>
-        </tr>
-        <tr>
-            <th >オーダＩＤ </th>
-            <td colspan="2" class="text-left">9911124275						</td>
-        </tr>
-        <tr>
-            <th >お客様名 </th>
-            <td  colspan="2" class="text-left">test3　様
-            </td>
-        </tr>
-        <tr>
-            <th >メールアドレス</th>
-            <td  colspan="2" class="text-left">seiya@cryptel.co.jp　
-            </td>
-        </tr>
-        <tr>
-            <th rowspan="1">対象商品</th>
-            <td  class="text-left">
-                NO.1 2105105405 男女兼用　静電作業靴　エレパス　Ｍ１０３　ホワイト　２３．０ｃｍ						
-            </td>
-            <td  class="text-left">
-                数量：1<br>
-            </td>
-        </tr>
-        <tr>
-            <th >返品理由/ご意見</th>
-            <td  colspan="2" class="text-left">小さいサイズ　
-            </td>
-        </tr>
-
-        <tr>
-            <th >集荷先情報</th>
-            <td  colspan="2" class="text-left">〒333-3333<br>大阪府八尾市　3333333<br>
-                株式会社bbb test3<br>							aaa test3 様<br>電話番号：00000000003						
-            </td>
-        </tr>
-
-        <tr>
-            <th >集荷日時</th>
-            <td  colspan="2" class="text-left">
-                2023年4月23日　　 午前中（9時～12時）						
-            </td>
-        </tr>
+            <tr>
+                <th >①受付番号 </th>
+                <td colspan="2" class="text-left">{{ $accept->accept_no }}　（印刷不可能な場合には受付番号を「交換・返品確認書」へご記入ください。）
+                </td>
+            </tr>
+            <tr>
+                <th >オーダＩＤ </th>
+                <td colspan="2" class="text-left">{{ $order_id }}</td>
+            </tr>
+            <tr>
+                <th >お客様名 </th>
+                <td  colspan="2" class="text-left">{{ $accept->name }}　様
+                </td>
+            </tr>
+            <tr>
+                <th >メールアドレス</th>
+                <td  colspan="2" class="text-left">{{ $accept->email }}　
+                </td>
+            </tr>
+            @foreach($returns as $no => $val)
+            <tr>
+                @if($loop->first)
+                {
+                    <th rowspan="{{ count($returns) }}">対象商品</th>
+                }
+                @endif
+                <td  class="text-left">
+                    {{ $orderDetails[$no]->product_nm }}
+                </td>
+                <td  class="text-left">
+                    数量：{{ $val }}<br>
+                </td>
+            </tr>
+            @endforeach
+            <tr>
+                <th >返品理由/ご意見等</th>
+                <td  colspan="2" class="text-left">{{ nl2br($accept->comment) }}
+                </td>
+            </tr>
 
         </table>
 
@@ -80,52 +72,46 @@
     <div class="visible-xs row">
         <h2 class="text-left">●受付内容</h2>
         <table class="table table-striped table-bordered table-condensed" >
-        <tr>
-            <th >①受付番号 </th>
-            <td colspan="2" class="text-left">202302047　（印刷不可能な場合には受付番号を「交換・返品確認書」へご記入ください。）
-            </td>
-        </tr>
-        <tr>
-            <th >オーダＩＤ </th>
-            <td colspan="2" class="text-left">9911124275						
+            <tr>
+                <th >①受付番号 </th>
+                <td colspan="2" class="text-left">{{ $accept->accept_no }}　（印刷不可能な場合には受付番号を「交換・返品確認書」へご記入ください。）
+                </td>
+            </tr>
+            <tr>
+                <th >オーダＩＤ </th>
+                <td colspan="2" class="text-left">{{ $order_id }}</td>
+            </tr>
+            <tr>
+                <th >お客様名 </th>
+                <td  colspan="2" class="text-left">{{ $accept->name }}　様
+                </td>
+            </tr>
+            <tr>
+                <th >メールアドレス</th>
+                <td  colspan="2" class="text-left">{{ $accept->email }}　
+                </td>
+            </tr>
+            @foreach($returns as $no => $val)
+            <tr>
+                @if($loop->first)
+                {
+                    <th rowspan="{{ count($returns) }}">対象商品</th>
+                }
+                @endif
+                <td  class="text-left">
+                    {{ $orderDetails[$no]->product_nm }}
+                </td>
+                <td  class="text-left">
+                    数量：{{ $val }}<br>
+                </td>
+            </tr>
+            @endforeach
+            <tr>
+                <th >返品理由/ご意見等</th>
+                <td  colspan="2" class="text-left">{{ nl2br($accept->comment) }}
+                </td>
+            </tr>
 
-            </td>
-        </tr>
-        <tr>
-            <th >お客様名 </th>
-            <td  colspan="2" class="text-left">test3　様
-            </td>
-        </tr>
-        <tr>
-            <th >メールアドレス</th>
-            <td  colspan="2" class="text-left">seiya@cryptel.co.jp　
-            </td>
-        </tr>
-        <tr>
-            <td  class="text-left">
-                    NO.1 2105105405 男女兼用　静電作業靴　エレパス　Ｍ１０３　ホワイト　２３．０ｃｍ						
-            </td>
-            <td  class="text-left">
-                    数量：1<br>
-            </td>
-        </tr>
-        <tr>
-            <th >返品理由/ご意見等</th>
-            <td  colspan="2" class="text-left">小さいサイズ　
-            </td>
-        </tr>
-        <tr>
-            <th >集荷先情報</th>
-            <td  colspan="2" class="text-left">〒333-3333<br>大阪府八尾市　3333333<br>
-                株式会社bbb test3<br>							aaa test3 様<br>電話番号：00000000003						
-            </td>
-        </tr>
-        <tr>
-            <th >集荷日時</th>
-            <td  colspan="2" class="text-left">
-                    2023年4月23日　　 午前中（9時～12時）						
-            </td>
-        </tr>
         </table>
     </div>
 

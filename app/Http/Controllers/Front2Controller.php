@@ -65,7 +65,7 @@ abstract class Front2Controller extends FrontBaseController
         // OrderDetail レコード
         $orderDetailModel = new OrderDetail();
         $orderDetails = $orderDetailModel->getByOrderId(Session::get('ft_order_id'));
-        $orderDetailsArray = [];
+        $orderDetailArray = [];
         foreach($orderDetails as $orderDetail)
         {
             $orderDetailArray[$orderDetail->row_no] = $orderDetail;
@@ -132,7 +132,7 @@ abstract class Front2Controller extends FrontBaseController
             }
 
             // 返品・交換 数量 0 以外が手入力された
-            if((! $request("t_" . $tmp[1])) || ($request("t_" . $tmp[1]) < 0))
+            if((! $request->input()["t_" . $tmp[1]]) || ($request->input()["t_" . $tmp[1]] < 0))
             {
                 $validator->errors()->add("t_" . $tmp[1], 'No.' . $tmp[1] . ' の数量を入力してください。');
                 $hasError = true;
@@ -140,14 +140,14 @@ abstract class Front2Controller extends FrontBaseController
             }
 
             // if(ereg("^[0-9]+$", $this->input->post("t_".$tmp[1]))){  2018/06/11
-            if(! preg_match("/^[0-9]+$/", $request("t_" . $tmp[1])))
+            if(! preg_match("/^[0-9]+$/", $request->input()["t_" . $tmp[1]]))
             {
                 $validator->errors()->add("t_" . $tmp[1], 'No.' . $tmp[1] . ' は数字を入力してください。');
                 $hasError = true;
                 continue;
             }
     
-            if($order_detail[$tmp[1]]->amount < $request("t_" . $tmp[1]))
+            if($orderDetailArray[$tmp[1]]->amount < $request->input()["t_" . $tmp[1]])
             {
                 $validator->errors()->add("t_" . $tmp[1], 'No.' . $tmp[1] . ' は購入数量を超えています。');
                 $hasError = true;
@@ -155,7 +155,7 @@ abstract class Front2Controller extends FrontBaseController
             }
 
             $umo++;
-            $total_price += $request("s_" . $tmp[1]) * $orderDetails[$tmp[1]]->unit_price;  // 2018/09/05
+            $total_price += $request->input()["s_" . $tmp[1]] * $orderDetailArray[$tmp[1]]->unit_price;  // 2018/09/05
         }
 
         if($umo == 0){
@@ -382,6 +382,29 @@ abstract class Front2Controller extends FrontBaseController
 
         // バーコード
         $params['barcode'] = \DNS1D::getBarcodeHTML($accept_no, "C39", 1, 70, 'black', 12);
+
+        // 返品・交換情報
+        $pickupTimeModel = new PickupTime();
+        $pickup_time_array = $pickupTimeModel->getListbox();
+        $returns = $this->_get_returns($request);   // 返品・交換対象
+        // OrderDetail レコード
+        $orderDetailModel = new OrderDetail();
+        $orderDetails = $orderDetailModel->getByOrderId(Session::get('ft_order_id'));
+        $orderDetailArray = [];
+        foreach($orderDetails as $orderDetail)
+        {
+            $orderDetailArray[$orderDetail->row_no] = $orderDetail;
+        }
+
+        $params['accept'] = $accept;
+        $params['order_id'] = Session::get('ft_order_id');
+        $params['pickup_datetime'] = "【集荷日時】\n "
+        . $this->show_ymd8_kanji($accept->pickup_date)
+        . "　"
+        . $pickup_time_array[$accept->pickup_time]
+        ;
+        $params['returns'] = $returns;
+        $params['orderDetails'] = $orderDetailArray;
 
         return $params;
     }

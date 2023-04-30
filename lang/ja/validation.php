@@ -185,6 +185,14 @@ return [
         'email' => 'メールアドレス',
         'email2' => '確認用メールアドレス',
         'password' => 'パスワード',
+        'post1' => '郵便番号１',
+        'post2' => '郵便番号２',
+        'address' => '住所',
+        'shipping_tel' => '電話番号',
+        'shipping_name' => '集荷先名',
+        'comment' => '理由',
+        'pickup_date' => '集荷日程',
+        'pickup_time' => '集荷時間',
     ],
 
 ];

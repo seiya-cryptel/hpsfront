@@ -14,15 +14,11 @@
 -->
 </script>
 
-    <h1>受付いただきましてありがとうございました。</h1>
-    <p>
-    <span class="t-red">※本受付表を商品と同梱ください。
-    印刷不可能な場合には、下段【①受付番号】を、商品と同梱されていました「交換・返確認書」へ記入いただきまして商品と同梱ください。</span>
-    </p>
-    <h3>商品お取替えをご希望の場合には、商品手配が完了しましたら、改めまして、発送日をご連絡させていただきますので、お待ちくださいませ。</h3>
+    <?php echo $message->comment1; ?>
+
     <div class="text-left" style="margin-top:30px;">
         <button type="button" class="hidden-xs btn btn-success  btn-lg hidden-print"   onClick="Javascript:window.print();" >受付表印刷</button>
-        <div class="mb-3"><?php echo $barcode; ?></div>
+        <div class="mb-3 pull-right"><?php echo $barcode; ?></div>
     </div>
 
     <div class="clearfix "></div>

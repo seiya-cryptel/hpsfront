@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Session;
@@ -41,6 +42,22 @@ abstract class Front2Controller extends FrontBaseController
         return (Session::get('Loginsts_ft') == 'ok' && (! empty(Session::get('ft_id'))));
     }
 
+    // 年月日８桁数字から日付表示
+    //  yyyy/mm/dd 編集           
+    protected function show_ymd8_kanji($date)
+    {
+        if($date > 0){
+            $y =substr($date, 0, 4);
+            $m =substr($date, 4, 2);
+            $d =substr($date, 6, 2);
+
+            return $y."年".(int)$m."月".(int)$d."日　　";
+        }
+
+        return "";
+    }	
+
+
     // validation 2
     protected function _validation(Request $request, $select)
     {
@@ -48,18 +65,17 @@ abstract class Front2Controller extends FrontBaseController
         // OrderDetail レコード
         $orderDetailModel = new OrderDetail();
         $orderDetails = $orderDetailModel->getByOrderId(Session::get('ft_order_id'));
+        $orderDetailsArray = [];
+        foreach($orderDetails as $orderDetail)
+        {
+            $orderDetailArray[$orderDetail->row_no] = $orderDetail;
+        }
 
+        $rules = [];
+        
         // Return_second::_set_validation(), order_id_check() 参照
         // オーダID存在チェック
-        $rules = [
-            // オーダID存在チェック
-            'order_id' => [['required','numeric'], function($attribute, $value, $fail) {
-                $orderModel = new Order();
-                if (! $orderModel->existsOrderId($value)) {
-                    return $fail('オーダIDを確認してください。');
-                }
-            }],
-        ];
+        $rules['order_id'] = 'required|numeric';
 
         // 登録 reg() でない、かつ、お客様都合返品でない
         if(($this->method != 'reg') && ($request['select'] != 4))
@@ -67,19 +83,17 @@ abstract class Front2Controller extends FrontBaseController
             $rules['post1'] = 'required|numeric';
             $rules['post2'] = 'required|numeric';
         }
-
-        // お客様都合返品でない
         if($request['select'] != 4)
         {
-            $rules['address'] = ['required'];
-            $rules['shipping_tel'] = ['required'];
-            $rules['shipping_name'] = ['required'];
+            $rules['address'] = 'required';
+            $rules['shipping_tel'] = 'required';
+            $rules['shipping_name'] = 'required';
         }
 
         // 理由
         $rules['comment'] = ['required'];
 
-        // クレーム返品、または、お客様都合返品
+        // クレーム返品、または、サイズ交換はピックアップあり
         if(($request['select'] == 2) || ($request['select'] == 3))
         {
             $rules['pickup_date'] = ['required','numeric'];
@@ -92,10 +106,18 @@ abstract class Front2Controller extends FrontBaseController
 
         $validated = $validator->validate();
 
+        // オーダID存在チェック
+        $validator->after(function($validator) use($request) {
+            $orderModel = new Order();
+            if (! $orderModel->existsOrderId($request->order_id)) {
+                $validator->errors()->add('order_id', 'オーダIDを確認してください。');
+            }
+        });
+
         $total_price = 0;
         $umo=0;
         $hasError = false;
-        foreach ($request as $key => $in) {
+        foreach ($request->input() as $key => $in) {
             $h = mb_substr($key, 0, 2);
             if($h != "s_")  continue;    // 数量以外は見ない
 
@@ -105,7 +127,7 @@ abstract class Front2Controller extends FrontBaseController
             if($in != -1)   // 数量が選択されて 0 でない
             {
                 $umo++;
-                $total_price += $request("s_" . $tmp[1]) * $orderDetails[$tmp[1]]->unit_price;  // 2018/09/17
+                $total_price += $request->input()["s_" . $tmp[1]] * $orderDetailArray[$tmp[1]]->unit_price;  // 2018/09/17
                 continue;
             }
 
@@ -138,9 +160,11 @@ abstract class Front2Controller extends FrontBaseController
 
         if($umo == 0){
             $validator->errors()->add("t_", '対象商品の数量を入力してください。');
+            $hasError = true;
         }
         if($total_price > 100000) { // 2018/09/05
             $validator->errors()->add("t_", '返品金額の合計金額が高額となる為、本システムでは受付出来ません。コールセンターまでお問合せ下さい。');
+            $hasError = true;
         }
 
         return $hasError ? $validator : null;
@@ -169,15 +193,52 @@ abstract class Front2Controller extends FrontBaseController
     }
 
     // メール送信用データ作成
-    protected function _generateMailData($order, $accept, &$mailData)
+    protected function _generateMailData(Request $request, $order, $accept, &$mailData)
     {
+        $returns =$this->_get_returns($request);
+        $pickupTimeModel = new PickupTime();
+        $pickup_time_array = $pickupTimeModel->getListbox();
+
+        $pickup_datetime = '';
+        if(! empty($accept->pickup_date))
+        {
+            $pickup_datetime = "【集荷日時】\n "
+             . $this->show_ymd8_kanji($accept->pickup_date)
+             . "　"
+             . $pickup_time_array[$accept->pickup_time]
+             ;
+        }
+
+        $orderDetailModel = new OrderDetail();
+        $orderDetails = $orderDetailModel->getByOrderId($order->order_id);
+        $orderDetailArray = [];
+        foreach($orderDetails as $orderDetail)
+        {
+            $orderDetailArray[$orderDetail->row_no] = $orderDetail;
+        }
+        $product_info = '';
+        foreach($returns as $no => $val){
+            $product_info = $product_info . $orderDetailArray[$no]->product_nm . " 数量： " . $val . "\n";
+        }
+
+
         $mailReplaceTable = [
-            "##date##"          => strftime('%Y/%m/%d'),
-            "##date time##"     => strftime('%Y/%m/%d %H:%M'),
-            "##site_url##"      => url('/', null, true),
-            "##password##"      => $accept->password,
-            "##name##"          => $order->order_name,
-            "##confirmation_url##"     => $this->regMail_login_url . $accept->login_id,
+            "##date##" =>  strftime('%Y/%m/%d'),
+            "##date time##" =>strftime('%Y/%m/%d %H:%M'),
+            "##accept_no##" =>$accept->accept_no,
+            "##order_id##" =>$accept->order_id,
+            "##name##" =>$accept->name,
+            "##email##" =>$accept->email,
+            "##comment##" => $accept->comment,
+            "##request_method##" => config('config.request_method')[$accept->request_content_class],
+            "##post##" =>$accept->post,
+            "##address##" =>$accept->address,
+            "##company##" =>$accept->company,      // 2018/09/05
+            "##division##" =>$accept->division,
+            "##shipping_tel##" =>$accept->shipping_tel,
+            "##shipping_name##" =>$accept->shipping_name,
+            "##pickup_datetime##" =>$pickup_datetime,
+            "##product_info##" =>$product_info,
         ];
 
         $source = array_keys($mailReplaceTable);
@@ -258,7 +319,7 @@ abstract class Front2Controller extends FrontBaseController
     {
         $validator = $this->_validation($request, $select);
         if(! is_null($validator)) {
-            return back()->withInput()->withErrors($validator);
+            throw new ValidationException($validator);
         }
 
         $params = $this->_entry($urlController, $select);
@@ -299,12 +360,21 @@ abstract class Front2Controller extends FrontBaseController
         $accept = $acceptModel->firstById(Session::get('ft_id'));
         $accept_no = $accept->accept_no;
 
+        $accept->post = $request->input()['post1'] . '-' . $request->input()['post2'];
+        $accept->address = $request->input()['address'];
+        $accept->company = $request->input()['company'];
+        $accept->division = $request->input()['division'];
+        $accept->pickup_date = $request->input()['pickup_date'];
+        $accept->pickup_time = $request->input()['pickup_time'];
+        $accept->comment = $request->input()['comment'];
+        $accept->update();
+
         // 受付明細レコード削除と追加
         $this->_RegenerateAcceptDetail($request, $select);
 
         // メールデータ作成
         $mailData = []; 
-        $this->_generateMailData($this->order, $this->accept, $mailData);
+        $this->_generateMailData($request, $this->order, $this->accept, $mailData);
 
         // メール送信
         $Mailer = new ReturnAccepted($mailData);

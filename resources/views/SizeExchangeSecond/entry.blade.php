@@ -121,8 +121,8 @@
                     <tr>
                         <th rowspan="6">集荷先情報</th>
                         <th colspan="2">郵便番号</th>
-                        <td >〒<input  name="post1" style="ime-mode: disabled;" type="post1" size="3" id="post1" value="{{ old('post1') }}">
-                            -<input  name="post2" style="ime-mode: disabled;" type="tel" size="4" id="post2" value="{{ old('post2') }}"><span class="notes">（半角数字）　例.486-0012</span>
+                        <td >〒<input  name="post1" style="ime-mode: disabled;" type="post1" size="3" id="post1" value="{{ old('post1', $post1) }}">
+                            -<input  name="post2" style="ime-mode: disabled;" type="tel" size="4" id="post2" value="{{ old('post2', $post2) }}"><span class="notes">（半角数字）　例.486-0012</span>
                             @error('post1')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -134,7 +134,7 @@
 
                     <tr>
                         <th colspan="2">住所</th>
-                        <td ><input name="address" type="text" id="address" value="{{ old('address') }}" MAXLENGTH="200"  size="80" >
+                        <td ><input name="address" type="text" id="address" value="{{ old('address', $address) }}" MAXLENGTH="200"  size="80" >
                             @error('address')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -143,7 +143,7 @@
 
                     <tr>
                         <th colspan="2">会社名</th>
-                        <td ><input name="company" type="text" id="company" value="{{  old('company') }}" MAXLENGTH="200"  size="80" >
+                        <td ><input name="company" type="text" id="company" value="{{  old('company', $company) }}" MAXLENGTH="200"  size="80" >
                             @error('company')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -151,7 +151,7 @@
                     </tr>
                     <tr>
                         <th colspan="2">部署名</th>
-                        <td ><input name="division" type="text" id="division" value="{{ old('division') }}" MAXLENGTH="200"  size="80" >
+                        <td ><input name="division" type="text" id="division" value="{{ old('division', $division) }}" MAXLENGTH="200"  size="80" >
                             @error('division')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -160,7 +160,7 @@
 
                     <tr>
                         <th colspan="2">電話番号</th>
-                        <td  ><input name="shipping_tel" type="tel" id="shipping_tel" value="{{ old('shipping_tel') }}"  MAXLENGTH="20" size="20"   style="ime-mode: inactive;" >
+                        <td  ><input name="shipping_tel" type="tel" id="shipping_tel" value="{{ old('shipping_tel', $shipping_tel) }}"  MAXLENGTH="20" size="20"   style="ime-mode: inactive;" >
                             <span class="notes">（半角数字）例.03-1234-5678</span>
                             @error('shipping_tel')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -170,7 +170,7 @@
 
                     <tr>
                         <th colspan="2">集荷先名</th>
-                        <td ><input name="shipping_name" type="text" id="shipping_name" value="{{ old('shipping_name') }}" MAXLENGTH="100"  size="80" >
+                        <td ><input name="shipping_name" type="text" id="shipping_name" value="{{ old('shipping_name', $shipping_name) }}" MAXLENGTH="100"  size="80" >
                             @error('shipping_name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror

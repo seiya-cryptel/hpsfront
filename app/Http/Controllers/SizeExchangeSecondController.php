@@ -47,6 +47,15 @@ class SizeExchangeSecondController extends Front2Controller
 
         $params = $this->_entry('sizeexchangesecond', $no);
 
+        // 初期値設定
+        $params['post1'] = mb_substr($this->order->post, 0, 3);
+        $params['post2'] = mb_substr($this->order->post, 3, 4);
+        $params['address'] = $this->order->address;
+        $params['company'] = $this->order->company;
+        $params['division'] = $this->order->division;
+        $params['shipping_tel'] = $this->order->shipping_tel;
+        $params['shipping_name'] = $this->order->shipping_name;
+
         // メッセージレコード
         $messageModel = new Message();
         $params['message'] = $messageModel->firstById(63);

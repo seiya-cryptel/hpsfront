@@ -6,26 +6,32 @@
 <div class="well">
     <button type="button" class="btn btn-danger btn-lg btn-block" ><strong>商品不良等</strong></button>
 
-<?php echo $message->comment1; ?>
+    <?php echo $message->comment1; ?>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="row col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <button class="close" data-dismiss="alert">
+                    ×
+                </button><strong>ご確認ください!</strong><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
-@endif
 
-<form action="/return1first" id="" method="post" accept-charset="utf-8">
+    <form action="/return1first" id="" method="post" accept-charset="utf-8">
 
-    @include('first')
+        @include('first')
 
-</form>
+    </form>
 
-<div class="clearfix"></div>
-<?php echo $message->comment7; ?>
+    <div class="clearfix"></div>
+    <?php echo $message->comment7; ?>
 
+</div>
 
 @endsection

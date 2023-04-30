@@ -30,18 +30,31 @@ abstract class Front1Controller extends FrontBaseController
         // Return_first::_set_validation(), order_id_check() 参照
         $validator = Validator::make($request->all(), [
             // オーダID存在チェック
-            'order_id' => [['required','numeric'], function($attribute, $value, $fail) {
-                $orderModel = new Order();
-                if (! $orderModel->existsOrderId($value)) {
-                    return $fail('オーダIDを確認してください。');
-                }
-            }],
-            // 電話番号整合性チェック
+            'order_id' => ['required','numeric'], 
             'tel' => ['required','numeric'],
             // メールアドレスチェック
             'email' => ['required','email'],
             'email2' => ['required','email'],
         ]);
+
+        $validated = $validator->validate();
+
+        // オーダID存在チェック
+        $validator->after(function($validator) use($request) {
+            $orderModel = new Order();
+            if (! $orderModel->existsOrderId($request->order_id)) {
+                $validator->errors()->add('order_id', 'オーダIDを確認してください。');
+            }
+        });
+
+        // email 同一チェック
+        $validator->after(function($validator) use($request) {
+            if ($request->email <> $request->email2) {
+                $validator->errors()->add('email2', 'メールアドレスが確認用メールアドレスと一致しません');
+            }    
+        });
+
+        $validated = $validator->validate();
 
         // オーダIDと電話番号の整合性チェック
         $validator->after(function($validator) use($request) {
@@ -60,27 +73,36 @@ abstract class Front1Controller extends FrontBaseController
         });
 
         // 返品・交換済みのオーダ
-        $validator->after(function($validator) use($request) {
-            $acceptModel = new Accept();
-            if ($acceptModel->alreadyReturned($request->order_id)) {
-                $validator->errors()->add('order_id', 'オーダＩＤは、すでに交換や返品を承っております。コールセンターにお問い合わせください。');
-            }    
-        });
+        if($this->section_cd == 'return1_first')
+        {   // 商品不良等の場合、Accept レコードが存在したら受け付けない
+            // Return1_first::order_id_check() 参照
+            $validator->after(function($validator) use($request) {
+                $acceptModel = new Accept();
+                if ($acceptModel->existsByOrderId($request->order_id)) {
+                    $validator->errors()->add('order_id', 'オーダＩＤは、すでに交換や返品を承っております。コールセンターにお問い合わせください。');
+                }    
+            });
+        }
+        else
+        {   // 商品不良等以外の場合、Accept レコードが存在し、かつ accept_no が決まっていたら受け付けない
+            $validator->after(function($validator) use($request) {
+                $acceptModel = new Accept();
+                if ($acceptModel->alreadyReturned($request->order_id)) {
+                    $validator->errors()->add('order_id', 'オーダＩＤは、すでに交換や返品を承っております。コールセンターにお問い合わせください。');
+                }    
+            });
+        }
 
         // 返品・交換可能なオーダ明細はあるか
-        $validator->after(function($validator) use($request) {
-            $orderDetailModel = new OrderDetail();
-            if (! $orderDetailModel->existsReturnable($request->order_id)) {
-                $validator->errors()->add('order_id', '大変申し訳ありません。お客様がご注文された商品は、返品・交換の対応ができません。');
-            }    
-        });
-
-        // email 同一チェック
-        $validator->after(function($validator) use($request) {
-            if ($request->email <> $request->email2) {
-                $validator->errors()->add('mail', 'メールアドレスが確認用メールアドレスと一致しません');
-            }    
-        });
+        if($this->section_cd != 'return1_first')
+        {   // サイズ交換とお客様都合の場合
+            $validator->after(function($validator) use($request) {
+                $orderDetailModel = new OrderDetail();
+                if (! $orderDetailModel->existsReturnable($request->order_id)) {
+                    $validator->errors()->add('order_id', '大変申し訳ありません。お客様がご注文された商品は、返品・交換の対応ができません。');
+                }    
+            });
+        }
 
         $validated = $validator->validate();
     }

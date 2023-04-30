@@ -104,6 +104,13 @@ class Accept extends Model
         'date_added',
     ];
 
+    // オーダIDを持つレコードがあるか
+    public function existsByOrderId($order_id)
+    {
+        $accepts = Accept::where('order_id', $order_id)->get();
+        return isn_null($accept) ? false : true;
+    }
+
     // オーダIDで返品・交換処理済みか調べる
     public function alreadyReturned($order_id)
     {

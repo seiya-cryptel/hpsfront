@@ -35,7 +35,7 @@ class Order extends Model
     // インポート日数をもとに、出荷日からの経過日数をチェック
     public function expiredForChange($order_id, $days)
     {
-        $order = Order::where('order_id', $order_id)->get();
+        $order = Order::where('order_id', $order_id)->first();
         if(! empty($order['date_added']))  // インポートからの日数で判断
         {
             // $strDateLimit = date('Y-m-d', strtotime('+21 days', strtotime($row['shipment_day'])));

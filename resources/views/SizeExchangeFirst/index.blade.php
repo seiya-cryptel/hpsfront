@@ -9,15 +9,20 @@
 
     <?php echo $message->comment1; ?>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <div class="row col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <button class="close" data-dismiss="alert">
+                    ×
+                </button><strong>ご確認ください!</strong><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
 
     <form action="/sizeexchangefirst" id="" method="post" accept-charset="utf-8">
 

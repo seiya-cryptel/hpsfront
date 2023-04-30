@@ -14,7 +14,8 @@ class OrderDetail extends Model
     // 返品・交換可能なオーダ明細があるか
     public function existsReturnable($order_id)
     {
-        $ret = OrderDetail::where('order_id', $order_id)->where('kbn_return', '<>', 0)->exists();
+        // kbn_return がゼロのレコードが一つでもあったら交換可能 
+        $ret = OrderDetail::where('order_id', $order_id)->where('kbn_return', 0)->exists();
         return $ret;
     }
 

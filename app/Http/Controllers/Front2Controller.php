@@ -381,7 +381,8 @@ abstract class Front2Controller extends FrontBaseController
         Mail::to($this->accept->email)->send($Mailer);
 
         // バーコード
-        $params['barcode'] = \DNS1D::getBarcodeHTML($accept_no, "C39", 1, 70, 'black', 12);
+        // $params['barcode'] = \DNS1D::getBarcodeHTML($accept_no, "C39", 1, 70, 'black', 12);
+        $params['barcode'] = \DNS1D::getBarcodeSVG($accept_no, "C39", 1, 70, 'black', 12);
 
         // 返品・交換情報
         $pickupTimeModel = new PickupTime();

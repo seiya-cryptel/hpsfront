@@ -112,9 +112,7 @@
             @foreach($returns as $no => $val)
             <tr>
                 @if($loop->first)
-                {
                     <th rowspan="{{ count($returns) }}">対象商品</th>
-                }
                 @endif
                 <td  class="text-left">
                     {{ $orderDetails[$no]->product_nm }}

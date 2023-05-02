@@ -60,7 +60,7 @@
         @endforeach
         <tr>
             <th >希望交換サイズ/ご意見等</th>
-            <td  colspan="2" class="text-left">{{ nl2br($accept->comment) }}
+            <td  colspan="2" class="text-left"><?php echo nl2br($accept->comment); ?>
             </td>
         </tr>
 
@@ -123,7 +123,7 @@
         @endforeach
         <tr>
             <th >希望交換サイズ/ご意見等</th>
-            <td  colspan="2" class="text-left">{{ nl2br($accept->comment) }}
+            <td  colspan="2" class="text-left"><?php echo nl2br($accept->comment); ?>
             </td>
         </tr>
 

@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <th >メールアドレス</th>
-            <td  class="text-left">{{ $accept->email }}　
+            <td  class="text-left">{{ $accept->email }}
             </td>
         </tr>
         <tr>
@@ -40,8 +40,8 @@
         </tr>
         <tr>
             <th >希望交換サイズ/ご意見等</th>
-            <td  class="text-left">　
-                {{ nl2br($request['comment']) }}
+            <td  class="text-left">
+                <?php echo nl2br($request['comment']); ?>
             </td>
         </tr>
         <tr>
@@ -84,7 +84,7 @@
         </tr>
         <tr>
             <th >メールアドレス</th>
-            <td  class="text-left">{{ $accept->email }}　
+            <td  class="text-left">{{ $accept->email }}
             </td>
         </tr>
         <tr>
@@ -97,8 +97,8 @@
         </tr>
         <tr>
             <th >希望交換サイズ/ご意見等</th>
-            <td  class="text-left">　
-                {{ nl2br($request['comment']) }}
+            <td  class="text-left">
+                <?php echo nl2br($request['comment']); ?>
             </td>
         </tr>
         <tr>

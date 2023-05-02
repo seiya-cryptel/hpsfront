@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <th >メールアドレス</th>
-            <td  class="text-left">{{ $accept->email }}　
+            <td  class="text-left">{{ $accept->email }}
             </td>
         </tr>
         <tr>
@@ -40,8 +40,8 @@
         </tr>
         <tr>
             <th >不良理由/ご意見</th>
-            <td  class="text-left">　
-                {{ nl2br($request['comment']) }}
+            <td  class="text-left">
+                <?php echo nl2br($request['comment']); ?>
             </td>
         </tr>
         <tr>
@@ -86,7 +86,7 @@
         </tr>
         <tr>
             <th >メールアドレス</th>
-            <td  class="text-left">{{ $accept->email }}　
+            <td  class="text-left">{{ $accept->email }}
             </td>
         </tr>
         <tr>
@@ -99,8 +99,8 @@
         </tr>
         <tr>
             <th >不良理由/ご意見</th>
-            <td  class="text-left">　
-                {{ nl2br($request['comment']) }}
+            <td  class="text-left">
+                <?php echo nl2br($request['comment']); ?>
             </td>
         </tr>
         @if($select == 2)

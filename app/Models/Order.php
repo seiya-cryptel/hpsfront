@@ -10,6 +10,8 @@ class Order extends Model
     use HasFactory;
 
     protected $table = 'return_t_order';
+    protected $primaryKey = 'order_id';
+    const UPDATED_AT = 'last_modified';
 
     // オーダID存在チェック
     public function existsOrderId($order_id)
@@ -46,5 +48,34 @@ class Order extends Model
             }
         }
         return true;
+    }
+
+    // 返品・交換を記録する
+    public function setReturnStatus($order_id, $select, $accept_no)
+    {
+        $order = Order::where('order_id', $order_id)->first();
+        switch($select)
+        {
+            case 1:
+            case 2:
+                $order->return1_no = $accept_no;
+                $order->return1_status = 1;
+                $order->return1_date = date('Y-m-d H:i:s');
+                break;
+            case 3:
+                $order->sizeexchange_no = $accept_no;
+                $order->sizeexchange_status = 1;
+                $order->sizeexchange_date = date('Y-m-d H:i:s');
+                break;
+            case 4:
+                $order->return2_no = $accept_no;
+                $order->return2_status = 1;
+                $order->return2_date = date('Y-m-d H:i:s');
+                break;
+            default:
+                break;
+        }
+        $order->update();
+        return $order;
     }
 }

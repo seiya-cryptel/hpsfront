@@ -61,7 +61,7 @@
             @endforeach
             <tr>
                 <th >返品理由/ご意見等</th>
-                <td  colspan="2" class="text-left">{{ nl2br($accept->comment) }}
+                <td  colspan="2" class="text-left"><?php echo nl2br($accept->comment); ?>
                 </td>
             </tr>
 
@@ -106,7 +106,7 @@
             @endforeach
             <tr>
                 <th >返品理由/ご意見等</th>
-                <td  colspan="2" class="text-left">{{ nl2br($accept->comment) }}
+                <td  colspan="2" class="text-left"><?php echo nl2br($accept->comment); ?>
                 </td>
             </tr>
 

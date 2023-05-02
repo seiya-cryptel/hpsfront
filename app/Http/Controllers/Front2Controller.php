@@ -372,9 +372,12 @@ abstract class Front2Controller extends FrontBaseController
         // 受付明細レコード削除と追加
         $this->_RegenerateAcceptDetail($request, $select);
 
+        $orderModel = new Order();
+        $order = $orderModel->setReturnStatus(Session::get('ft_order_id'), $select, $accept_no);
+
         // メールデータ作成
         $mailData = []; 
-        $this->_generateMailData($request, $this->order, $this->accept, $mailData);
+        $this->_generateMailData($request, $order, $accept, $mailData);
 
         // メール送信
         $Mailer = new ReturnAccepted($mailData);

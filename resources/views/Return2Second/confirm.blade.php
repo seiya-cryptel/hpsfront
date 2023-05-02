@@ -39,8 +39,8 @@
             </tr>
                 <tr>
                 <th >返品理由/ご意見</th>
-                <td  class="text-left">　
-                    {{ nl2br($request['comment']) }}
+                <td  class="text-left">
+                    <?php echo nl2br($request['comment']); ?>
                 </td>
             </tr>
         </table>
@@ -62,7 +62,7 @@
             </tr>
             <tr>
                 <th >メールアドレス</th>
-                <td  class="text-left">{{ $accept->email }}　
+                <td  class="text-left">{{ $accept->email }}
                 </td>
             </tr>
             <tr>
@@ -75,8 +75,8 @@
             </tr>
             <tr>
                 <th >返品理由/ご意見</th>
-                <td  class="text-left">　
-                    {{ nl2br($request['comment']) }}
+                <td  class="text-left">
+                    <?php echo nl2br($request['comment']); ?>
                 </td>
             </tr>
         </table>

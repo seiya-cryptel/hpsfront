@@ -116,7 +116,7 @@
                         <td >〒<input  name="post1" style="ime-mode: disabled;" type="post1" size="3" id="post1" value="{{ old('post1', $post1) }}">
                             -<input  name="post2" style="ime-mode: disabled;" type="tel" size="4" id="post2" value="{{ old('post2', $post2) }}"><span class="notes">（半角数字）　例.486-0012</span>
                             @error('post1')
-                                <code>{{ $message }}</code>
+                                <code>{{ $message }}</code><br>
                             @enderror
                             @error('post2')
                                 <code>{{ $message }}</code>
@@ -174,7 +174,7 @@
                         <td  colspan="1"><span class="notes">※お手元の商品を配送会社より伝票をお持ちしてお引取りに伺わせていただきます。入力翌日より、当社2営業日目以降にて日程よりご都合の宜しい日時をご指定下さい。</span><br>
                         日程{{ Form::select('pickup_date', $pickupDays, $pickup_date ?? null, []) }}<br>
                         @error('pickup_date')
-                            <code>{{ $message }}</code>
+                            <code>{{ $message }}</code><br>
                         @enderror
                         時間{{ Form::select('pickup_time', $pickupTimes, $pickup_time ?? null, []) }}<br>
                         @error('pickup_time')
@@ -189,10 +189,10 @@
                         <tr>
                             <th colspan="2">交換理由・希望サイズ</th>
                             <td><textarea name="comment" rows="5" id="comment" placeholder="交換理由・希望サイズをご記入ください。&#13;&#10;（例）小さかったので、H700N　24.5cm->25.0cmへ交換">{{ old('comment') }}</textarea>
+                                @error('comment')
+                                    <code>{{ $message }}</code>
+                                @enderror
                             </td>
-                            @error('comment')
-                                <code>{{ $message }}</code>
-                            @enderror
                         </tr>
                         </table>
                     </div>

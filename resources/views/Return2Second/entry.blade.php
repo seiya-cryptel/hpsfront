@@ -114,10 +114,10 @@
                         <tr>
                             <th colspan="2">返品理由/ご意見</th>
                             <td><textarea name="comment" rows="5" id="comment" placeholder="不良個所・現象/ご意見等ございましたらご記入ください。">{{ old('comment') }}</textarea>
+                                @error('comment')
+                                    <code>{{ $message }}</code>
+                                @enderror
                             </td>
-                            @error('comment')
-                                <code>{{ $message }}</code>
-                            @enderror
                         </tr>
                         </table>
                     </div>

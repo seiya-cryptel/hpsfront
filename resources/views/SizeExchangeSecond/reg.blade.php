@@ -68,7 +68,8 @@
             <th >集荷先情報</th>
             <td  colspan="2" class="text-left">〒{{ $accept->post }}<br>{{ $accept->address }}<br>
                 {{ $accept->company }}<br>
-                {{ $accept->company }} 様<br>
+                {{ $accept->division }}<br>
+                {{ $accept->shipping_name }} 様<br>
                 電話番号：{{ $accept->shipping_tel }}						
             </td>
         </tr>
@@ -129,9 +130,12 @@
 
         <tr>
             <th >集荷先情報</th>
-            <td  colspan="2" class="text-left">〒{{ $accept->post }}<br>{{ $accept->address }}<br>
+            <td  colspan="2" class="text-left">
+                〒{{ $accept->post }}<br>
+                {{ $accept->address }}<br>
                 {{ $accept->company }}<br>
-                {{ $accept->company }} 様<br>
+                {{ $accept->division }}<br>
+                {{ $accept->shipping_name }} 様<br>
                 電話番号：{{ $accept->shipping_tel }}						
             </td>
         </tr>

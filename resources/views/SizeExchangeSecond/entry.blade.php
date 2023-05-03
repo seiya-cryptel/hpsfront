@@ -113,8 +113,8 @@
                     <tr>
                         <th rowspan="6">集荷先情報</th>
                         <th colspan="2">郵便番号</th>
-                        <td >〒<input  name="post1" style="ime-mode: disabled;" type="post1" size="3" id="post1" value="{{ old('post1', $post1) }}">
-                            -<input  name="post2" style="ime-mode: disabled;" type="tel" size="4" id="post2" value="{{ old('post2', $post2) }}"><span class="notes">（半角数字）　例.486-0012</span>
+                        <td >〒<input  name="post1" style="ime-mode: disabled;" type="post1" size="3" id="post1" value="{{ old('post1', $post1 ?? ($_POST['post1'] ?? null)) }}">
+                            -<input  name="post2" style="ime-mode: disabled;" type="tel" size="4" id="post2" value="{{ old('post2', $post2 ?? ($_POST['post2'] ?? null)) }}"><span class="notes">（半角数字）　例.486-0012</span>
                             @error('post1')
                                 <code>{{ $message }}</code><br>
                             @enderror
@@ -126,7 +126,7 @@
 
                     <tr>
                         <th colspan="2">住所</th>
-                        <td ><input name="address" type="text" id="address" value="{{ old('address', $address) }}" MAXLENGTH="200"  size="80" >
+                        <td ><input name="address" type="text" id="address" value="{{ old('address', $address ?? ($_POST['address'] ?? null)) }}" MAXLENGTH="200"  size="80" >
                             @error('address')
                                 <code>{{ $message }}</code>
                             @enderror
@@ -135,7 +135,7 @@
 
                     <tr>
                         <th colspan="2">会社名</th>
-                        <td ><input name="company" type="text" id="company" value="{{  old('company', $company) }}" MAXLENGTH="200"  size="80" >
+                        <td ><input name="company" type="text" id="company" value="{{  old('company', $company ?? ($_POST['company'] ?? null)) }}" MAXLENGTH="200"  size="80" >
                             @error('company')
                                 <code>{{ $message }}</code>
                             @enderror
@@ -143,7 +143,7 @@
                     </tr>
                     <tr>
                         <th colspan="2">部署名</th>
-                        <td ><input name="division" type="text" id="division" value="{{ old('division', $division) }}" MAXLENGTH="200"  size="80" >
+                        <td ><input name="division" type="text" id="division" value="{{ old('division', $division ?? ($_POST['division'] ?? null)) }}" MAXLENGTH="200"  size="80" >
                             @error('division')
                                 <code>{{ $message }}</code>
                             @enderror
@@ -152,7 +152,7 @@
 
                     <tr>
                         <th colspan="2">電話番号</th>
-                        <td  ><input name="shipping_tel" type="tel" id="shipping_tel" value="{{ old('shipping_tel', $shipping_tel) }}"  MAXLENGTH="20" size="20"   style="ime-mode: inactive;" >
+                        <td  ><input name="shipping_tel" type="tel" id="shipping_tel" value="{{ old('shipping_tel', $shipping_tel ?? ($_POST['shipping_tel'] ?? null)) }}"  MAXLENGTH="20" size="20"   style="ime-mode: inactive;" >
                             <span class="notes">（半角数字）例.03-1234-5678</span>
                             @error('shipping_tel')
                                 <code>{{ $message }}</code>
@@ -162,7 +162,7 @@
 
                     <tr>
                         <th colspan="2">集荷先名</th>
-                        <td ><input name="shipping_name" type="text" id="shipping_name" value="{{ old('shipping_name', $shipping_name) }}" MAXLENGTH="100"  size="80" >
+                        <td ><input name="shipping_name" type="text" id="shipping_name" value="{{ old('shipping_name', $shipping_name ?? ($_POST['shipping_name'] ?? null)) }}" MAXLENGTH="100"  size="80" >
                             @error('shipping_name')
                                 <code>{{ $message }}</code>
                             @enderror
@@ -172,11 +172,11 @@
                     <tr>
                         <th   colspan="3">集荷日情報</th>
                         <td  colspan="1"><span class="notes">※お手元の商品を配送会社より伝票をお持ちしてお引取りに伺わせていただきます。入力翌日より、当社2営業日目以降にて日程よりご都合の宜しい日時をご指定下さい。</span><br>
-                        日程{{ Form::select('pickup_date', $pickupDays, $pickup_date ?? null, []) }}<br>
+                        日程{{ Form::select('pickup_date', $pickupDays, old('pickup_date', $pickup_date ?? ($_POST['pickup_date'] ?? null)), []) }}<br>
                         @error('pickup_date')
                             <code>{{ $message }}</code><br>
                         @enderror
-                        時間{{ Form::select('pickup_time', $pickupTimes, $pickup_time ?? null, []) }}<br>
+                        時間{{ Form::select('pickup_time', $pickupTimes, old('pickup_time', $pickup_time ?? ($_POST['pickup_time'] ?? null)), []) }}<br>
                         @error('pickup_time')
                             <code>{{ $message }}</code>
                         @enderror
@@ -188,7 +188,7 @@
                         <table>
                         <tr>
                             <th colspan="2">交換理由・希望サイズ</th>
-                            <td><textarea name="comment" rows="5" id="comment" placeholder="交換理由・希望サイズをご記入ください。&#13;&#10;（例）小さかったので、H700N　24.5cm->25.0cmへ交換">{{ old('comment') }}</textarea>
+                            <td><textarea name="comment" rows="5" id="comment" placeholder="交換理由・希望サイズをご記入ください。&#13;&#10;（例）小さかったので、H700N　24.5cm->25.0cmへ交換">{{ old('comment', $_POST['comment'] ?? null) }}</textarea>
                                 @error('comment')
                                     <code>{{ $message }}</code>
                                 @enderror

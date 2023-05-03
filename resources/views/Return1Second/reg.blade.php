@@ -24,7 +24,7 @@
     <div class="clearfix "></div>
     <br><br>
     <div class="hidden-xs row privacy center-block">
-        <h2 class="text-left">●受付内容</h2>
+        <h2 class="text-left"><span class="t-red">●受付内容</span></h2>
         <table class="table table-striped table-bordered table-condensed" >
             <tr>
                 <th >①受付番号 </th>
@@ -48,9 +48,7 @@
             @foreach($returns as $no => $val)
             <tr>
                 @if($loop->first)
-                {
                     <th rowspan="{{ count($returns) }}">対象商品</th>
-                }
                 @endif
                 <td  class="text-left">
                     {{ $orderDetails[$no]->product_nm }}
@@ -89,7 +87,7 @@
     </div>
 
     <div class="visible-xs row">
-        <h2 class="text-left">●受付内容</h2>
+        <h2 class="text-left"><span class="t-red">●受付内容</span></h2>
         <table class="table table-striped table-bordered table-condensed" >
             <tr>
                 <th >①受付番号 </th>
@@ -154,10 +152,13 @@
     </div>
 
     <div class="clearfix"></div>
+	<?=$message["comment2"];?>
 
     <div class="hidden-xs text-center hidden-print" style="margin-top:30px;">
         <button type="button" class="btn btn-success btn-lg "   onClick="Javascript:window.print();" >受付表印刷</button>
     </div>
+
+	<?=$message["comment3"];?>
 
 </div>
 

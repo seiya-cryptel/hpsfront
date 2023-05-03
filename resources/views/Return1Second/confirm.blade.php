@@ -137,14 +137,34 @@
         <table border="0" summary="" cellspacing="0" align="center">
             <tr>
                 <td>
-
                     @if($act == 'detail' || $act == 'reg')
-                        {{-- <input type="submit" value="訂正する" class="btn btn-success btn-lg"  /> --}}
-                        <input type="button" value="訂正する" onClick="history.back()" class="btn btn-default btn-lg" />
+                        {{ Form::open(['url' => '/' . $urlController . '/entry/' . $select . '/']) }}
+                        {{ Form::hidden('order_id',     $order_id) }}
+                        {{ Form::hidden('select', $select) }}
+                        {{ Form::hidden('post1', $request->post1) }}
+                        {{ Form::hidden('post2', $request->post2) }}
+                        {{ Form::hidden('shipping_tel',    $request->shipping_tel) }}
+                        {{ Form::hidden('shipping_name',    $request->shipping_name) }}
+                        {{ Form::hidden('address', $request->address) }}
+                        {{ Form::hidden('company', $request->company) }}
+                        {{ Form::hidden('division', $request->division) }}
+                        @foreach ($request->input() as $key => $in)
+                            @php
+                            $h = mb_substr($key, 0, 2);
+                            @endphp
+                            @if($h == "s_" || $h == "t_")
+                            {{ Form::hidden($key, $in) }}
+                            @endif
+                        @endforeach
+                        {{ Form::hidden('comment', $request->comment) }}
+                        {{ Form::hidden('pickup_date',    $request->pickup_date) }}
+                        {{ Form::hidden('pickup_time', $request->pickup_time) }}
+                        &nbsp;<button type="submit" class="btn btn-success btn-lg " >訂正する</button>
                         @if($act == 'detail')
-                        &nbsp;	<input type="button" value="削除" onclick="javascript:confirmDelete();" class="btn btn-default" />
-                        &nbsp;	<input type="button" value="前のページに戻る" onClick="history.back()" class="btn btn-default" />
+                            &nbsp;	<input type="button" value="削除" onclick="javascript:confirmDelete();" class="btn btn-default" />
+                            &nbsp;	<input type="button" value="前のページに戻る" onClick="history.back()" class="btn btn-default" />
                         @endif
+                        {{ Form::close() }}
                     @endif
                 </td>
                 <td>
@@ -182,15 +202,35 @@
         <table border="0" summary="" cellspacing="0" align="center">
             <tr>
                 <td>
-
                     @if($act == 'detail' || $act == 'reg')
-                        {{-- <input type="submit" value="訂正する" class="btn btn-success btn-lg"  /> --}}
-                        <input type="button" value="訂正する" onClick="history.back()" class="btn btn-default " />
-                        @if($act == 'detail')
+                    {{ Form::open(['url' => '/' . $urlController . '/entry/' . $select . '/']) }}
+                    {{ Form::hidden('order_id',     $order_id) }}
+                    {{ Form::hidden('select', $select) }}
+                    {{ Form::hidden('post1', $request->post1) }}
+                    {{ Form::hidden('post2', $request->post2) }}
+                    {{ Form::hidden('shipping_tel',    $request->shipping_tel) }}
+                    {{ Form::hidden('shipping_name',    $request->shipping_name) }}
+                    {{ Form::hidden('address', $request->address) }}
+                    {{ Form::hidden('company', $request->company) }}
+                    {{ Form::hidden('division', $request->division) }}
+                    @foreach ($request->input() as $key => $in)
+                        @php
+                        $h = mb_substr($key, 0, 2);
+                        @endphp
+                        @if($h == "s_" || $h == "t_")
+                        {{ Form::hidden($key, $in) }}
+                        @endif
+                    @endforeach
+                    {{ Form::hidden('comment', $request->comment) }}
+                    {{ Form::hidden('pickup_date',    $request->pickup_date) }}
+                    {{ Form::hidden('pickup_time', $request->pickup_time) }}
+                    &nbsp;<button type="submit" class="btn btn-success btn-lg " >訂正する</button>
+                    @if($act == 'detail')
                         &nbsp;	<input type="button" value="削除" onclick="javascript:confirmDelete();" class="btn btn-default" />
                         &nbsp;	<input type="button" value="前のページに戻る" onClick="history.back()" class="btn btn-default" />
-                        @endif
                     @endif
+                    {{ Form::close() }}
+                @endif
                 </td>
                 <td>
                     @if($act == 'reg')

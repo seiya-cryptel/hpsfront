@@ -24,7 +24,7 @@
     <div class="clearfix "></div>
     <br><br>
     <div class="hidden-xs row privacy center-block">
-        <h2 class="text-left">●受付内容</h2>
+        <h2 class="text-left"><span class="t-red">●受付内容</span></h2>
         <table class="table table-striped table-bordered table-condensed" >
         <tr>
             <th >①受付番号 </th>
@@ -86,7 +86,7 @@
     </div>
 
     <div class="visible-xs row">
-        <h2 class="text-left">●受付内容</h2>
+        <h2 class="text-left"><span class="t-red">●受付内容</span></h2>
         <table class="table table-striped table-bordered table-condensed" >
         <tr>
             <th >①受付番号 </th>

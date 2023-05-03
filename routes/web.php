@@ -40,6 +40,7 @@ Route::post('/sizeexchangefirst', [SizeExchangeFirstController::class, 'reg']);
 Route::get('/sizeexchangesecond', [SizeExchangeSecondController::class, 'index']);  // サイズ交換について
 Route::get('/sizeexchangesecond/no', [SizeExchangeSecondController::class, 'no']);  // 同意できない
 Route::get('/sizeexchangesecond/entry/{no}', [SizeExchangeSecondController::class, 'entry']);
+Route::post('/sizeexchangesecond/entry/{no}', [SizeExchangeSecondController::class, 'entry']);
 Route::post('/sizeexchangesecond/confirm/{no}', [SizeExchangeSecondController::class, 'confirm']);
 Route::post('/sizeexchangesecond/reg/{no}', [SizeExchangeSecondController::class, 'reg']);
 
@@ -50,6 +51,7 @@ Route::post('/return1first', [Return1FirstController::class, 'reg']);
 
 Route::get('/return1second', [Return1SecondController::class, 'index']);  // サイズ交換について
 Route::get('/return1second/entry/{no}', [Return1SecondController::class, 'entry']);
+Route::post('/return1second/entry/{no}', [Return1SecondController::class, 'entry']);
 Route::post('/return1second/confirm/{no}', [Return1SecondController::class, 'confirm']);
 Route::post('/return1second/reg/{no}', [Return1SecondController::class, 'reg']);
 
@@ -61,6 +63,7 @@ Route::post('/return2first', [Return2FirstController::class, 'reg']);
 Route::get('/return2second', [Return2SecondController::class, 'index']);  // サイズ交換について
 Route::get('/return2second/no', [Return2SecondController::class, 'no']);  // 同意できない
 Route::get('/return2second/entry/{no}', [Return2SecondController::class, 'entry']);
+Route::post('/return2second/entry/{no}', [Return2SecondController::class, 'entry']);
 Route::post('/return2second/confirm/{no}', [Return2SecondController::class, 'confirm']);
 Route::post('/return2second/reg/{no}', [Return2SecondController::class, 'reg']);
 

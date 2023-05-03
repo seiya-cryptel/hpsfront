@@ -75,7 +75,7 @@
                                 echo show_select_amount(
                                         $select,
                                         $s_no,
-                                        $$s_no,
+                                        old($s_no, $$s_no),
                                         $_POST[$s_no] ?? null,
                                         $orderDetail->amount,
                                         $orderDetail->kbn_return,
@@ -89,9 +89,9 @@
                                     echo show_text_amount(
                                         $select,
                                         $t_no,
-                                        $$t_no,
+                                        old($t_no, $$t_no),
                                         $_POST[$t_no] ?? null,
-                                        $$s_no,
+                                        old($s_no, $$s_no),
                                         $_POST[$s_no] ?? null,
                                         $orderDetail->amount,
                                         $orderDetail->kbn_return,

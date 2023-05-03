@@ -16,7 +16,7 @@
                     （例）1701010001<br>
                     </span>
                     @error('order_id')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                        <code>{{ $message }}</code>
                     @enderror
                 </td>
             </tr>
@@ -30,7 +30,7 @@
                     （例）0312340000　ハイフン抜きです。
                     </span>	
                     @error('tel')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                        <code>{{ $message }}</code>
                     @enderror
                 </td>
             </tr>
@@ -42,7 +42,7 @@
                     （ご注文時と異なるアドレスでも可能です）
                     </span>
                     @error('email')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                        <code>{{ $message }}</code>
                     @enderror
                 </td>
             </tr>
@@ -53,7 +53,7 @@
                     <span class="notes">【確認用】3.に入力いただきましたメールアドレスを再度入力下さい<br>
                     </span>
                     @error('email2')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                        <code>{{ $message }}</code>
                     @enderror
                 </td>
             </tr>

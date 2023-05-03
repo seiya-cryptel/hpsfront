@@ -24,15 +24,7 @@
 
     <br><br>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @include('errorList')
 
     <form action="/login/check/{{ $login_id }}" id="" method="post" accept-charset="utf-8">
         @csrf

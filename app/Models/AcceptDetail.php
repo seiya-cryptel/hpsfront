@@ -49,4 +49,14 @@ class AcceptDetail extends Model
         ]);        
     }
     
+    // 返品リスtを返す
+	public static function get_list_id($accept_id)
+    {
+        $ret = [];
+        $rows = self::where('accept_id', $accept_id)->get();
+        foreach ($rows as $row) {
+            $ret[$row->row_no] = $row;
+        }
+        return $ret;
+    }
 }

@@ -27,6 +27,7 @@ use App\Http\Controllers\Return1SecondController;
 use App\Http\Controllers\Return2FirstController;
 use App\Http\Controllers\Return2SecondController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Front2Controller;
 use App\Http\Controllers\ImageBarCodeController;
 
 // トップ
@@ -66,6 +67,9 @@ Route::get('/return2second/entry/{no}', [Return2SecondController::class, 'entry'
 Route::post('/return2second/entry/{no}', [Return2SecondController::class, 'entry']);
 Route::post('/return2second/confirm/{no}', [Return2SecondController::class, 'confirm']);
 Route::post('/return2second/reg/{no}', [Return2SecondController::class, 'reg']);
+
+// 受付表表示
+Route::get('/return_second/hyo/{accept_id}', [Front2Controller::class, 'hyo']);
 
 // ログイン
 Route::get('/login/index/{login_id}', [LoginController::class, 'index']);

@@ -22,7 +22,8 @@ use App\Models\PickupTime;
 use App\Models\BusinessDay;
 use App\Mail\ReturnAccepted;
 
-abstract class Front2Controller extends FrontBaseController
+// abstract class Front2Controller extends FrontBaseController
+class Front2Controller extends FrontBaseController
 {
     protected $accept;
     protected $order;
@@ -411,6 +412,46 @@ abstract class Front2Controller extends FrontBaseController
         $params['orderDetails'] = $orderDetailArray;
 
         return $params;
+    }
+
+    // 受付表表示
+    protected function hyo($id)
+    {
+		if(empty($id))
+        {
+			return "";
+		}
+        $params = [];
+		// $data=$this->_main_init($data);
+		// $data=$this->_method_confirm_set($data);
+		// $data["accept"]=$this->accept_model->get_row_id($id,$data);
+		// $data['p']=$this->accept_detail_model->get_list_id($id);
+		// $data['main'] = $this->load->view($this->view_prefix. 'ad_hyo_view', $data, true);
+
+        // accept レコード
+        $acceptModel = new Accept();
+        $accept = $acceptModel->firstById($id);
+        $params['accept'] = $accept;
+
+        // バーコード
+        $params['barcode'] = \DNS1D::getBarcodeSVG($id, "C39", 1, 70, 'black', 12);
+
+        // 対応方法
+        $params['request_method_array'] = config('config.request_method');
+
+        // 返品・交換情報
+        $acceptDetailModel = new AcceptDetail();
+        $params['returns'] = $acceptDetailModel->get_list_id($id);
+        // 集荷日時
+        $pickupTimeModel = new PickupTime();
+        $pickup_time_array = $pickupTimeModel->getListbox();
+        $params['pickup_datetime'] = "【集荷日時】\n "
+        . $this->show_ymd8_kanji($accept->pickup_date)
+        . "　"
+        . $pickup_time_array[$accept->pickup_time]
+        ;
+
+        return view('Front2/hyo', $params);
     }
 
 }

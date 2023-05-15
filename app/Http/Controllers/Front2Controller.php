@@ -22,7 +22,6 @@ use App\Models\PickupTime;
 use App\Models\BusinessDay;
 use App\Mail\ReturnAccepted;
 
-// abstract class Front2Controller extends FrontBaseController
 class Front2Controller extends FrontBaseController
 {
     protected $accept;
@@ -81,8 +80,8 @@ class Front2Controller extends FrontBaseController
         // 登録 reg() でない、かつ、お客様都合返品でない
         if(($this->method != 'reg') && ($request['select'] != 4))
         {
-            $rules['post1'] = 'required|numeric';
-            $rules['post2'] = 'required|numeric';
+            $rules['post1'] = 'required|numeric|min:0|max:999';
+            $rules['post2'] = 'required|numeric|min:0|max:9999';
         }
         if($request['select'] != 4)
         {
@@ -368,6 +367,9 @@ class Front2Controller extends FrontBaseController
         $accept->pickup_date = $request->input()['pickup_date'];
         $accept->pickup_time = $request->input()['pickup_time'];
         $accept->comment = $request->input()['comment'];
+        $accept->input_source = 1;
+        $accept->date_accept = date('Y-m-d H:i:s');
+        $accept->u_register = $request->ip();
         $accept->update();
 
         // 受付明細レコード削除と追加

@@ -113,8 +113,8 @@
                     <tr>
                         <th rowspan="6">集荷先情報</th>
                         <th colspan="2">郵便番号</th>
-                        <td >〒<input  name="post1" style="ime-mode: disabled;" type="post1" size="3" id="post1" value="{{ old('post1', $post1 ?? ($_POST['post1'] ?? null)) }}">
-                            -<input  name="post2" style="ime-mode: disabled;" type="tel" size="4" id="post2" value="{{ old('post2', $post2 ?? ($_POST['post2'] ?? null)) }}"><span class="notes">（半角数字）　例.486-0012</span>
+                        <td >〒<input  name="post1" style="ime-mode: disabled;" type="post1" size="3" id="post1" value="{{ old('post1', $post1 ) }}">
+                            -<input  name="post2" style="ime-mode: disabled;" type="tel" size="4" id="post2" value="{{ old('post2', $post2) }}"><span class="notes">（半角数字）　例.486-0012</span>
                             @error('post1')
                                 <code>{{ $message }}</code><br>
                             @enderror

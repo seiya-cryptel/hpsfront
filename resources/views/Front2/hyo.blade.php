@@ -1,3 +1,4 @@
+{{-- views/Front2/hyo.blade.php --}}
 
 @extends('layout')
 

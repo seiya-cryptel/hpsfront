@@ -49,7 +49,8 @@ class SizeExchangeSecondController extends Front2Controller
 
         // 初期値設定
         $params['post1'] = mb_substr($this->order->post, 0, 3);
-        $params['post2'] = mb_substr($this->order->post, 3, 4);
+        $post2_start = (strlen($this->order->post) > 7) ? 4 : 3;
+        $params['post2'] = mb_substr($this->order->post, $post2_start, 4);
         $params['address'] = $this->order->address;
         $params['company'] = $this->order->company;
         $params['division'] = $this->order->division;
